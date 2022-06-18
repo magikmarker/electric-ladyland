@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx?browser", "../../../app/routes/multi-item-form.tsx"],
+  "sourcesContent": ["export { default, meta } from \"/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx\";", "import type { LoaderFunction, MetaFunction } from \"@remix-run/node\";\nimport { json } from \"@remix-run/node\";\nimport { multiItemStepForm } from \"~/forms/multi-item-form\";\nimport { formLoaderFunction } from \"~/services/form/loader-function\";\n\nconst metaTitle = \"Multi-Item Form\";\nconst metaDescription = \"TODO - Fill in description\";\n\nexport let meta: MetaFunction = () => {\n  return {\n    title: metaTitle,\n    description: metaDescription,\n  };\n};\n\nexport let loader: LoaderFunction = async ({ request }) => {\n  const { formStructure, context, commitSession, session } =\n    await formLoaderFunction({\n      formType: \"multipart\",\n      request,\n      formStructure: multiItemStepForm,\n    });\n\n  return json(\n    {\n      formStructure,\n      context,\n    },\n    {\n      headers: {\n        \"Set-Cookie\": await commitSession(session),\n      },\n    }\n  );\n};\n\nexport default function MultiItemForm() {\n  return <h1>Multi Item Form</h1>;\n}\n"],
+  "mappings": ";;;;;;AAAA;;;ACAA;AAKA,IAAM,YAAY;AAClB,IAAM,kBAAkB;AAEjB,IAAI,OAAqB,MAAM;AACpC,SAAO;AAAA,IACL,OAAO;AAAA,IACP,aAAa;AAAA;AAAA;AAyBF,yBAAyB;AACtC,SAAO,oCAAC,MAAD,MAAI;AAAA;",
+  "names": []
+}

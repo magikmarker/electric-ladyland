@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/index.tsx?browser", "../../../app/routes/index.tsx"],
+  "sourcesContent": ["export { default } from \"/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/index.tsx\";", "import { Link } from \"@remix-run/react\";\n\nexport default function Index() {\n  return (\n    <div\n      style={{\n        fontFamily: `'-apple-system', 'Segoe UI', 'Helvetica Neue',\n    'Helvetica', 'Roboto', 'Arial', 'sans-serif', 'system-ui', 'Apple Color Emoji',\n    'Segoe UI Emoji'`,\n        lineHeight: \"1.4\",\n      }}\n    >\n      <h1>Remixed Form</h1>\n      <ul>\n        <li>\n          <Link to=\"/multi-item-form\">Multi-Item Form</Link>\n        </li>\n      </ul>\n    </div>\n  );\n}\n"],
+  "mappings": ";;;;;;;;;AAAA;;;ACAA;AAEe,iBAAiB;AAC9B,SACE,oCAAC,OAAD;AAAA,IACE,OAAO;AAAA,MACL,YAAY;AAAA;AAAA;AAAA,MAGZ,YAAY;AAAA;AAAA,KAGd,oCAAC,MAAD,MAAI,iBACJ,oCAAC,MAAD,MACE,oCAAC,MAAD,MACE,oCAAC,MAAD;AAAA,IAAM,IAAG;AAAA,KAAmB;AAAA;",
+  "names": []
+}

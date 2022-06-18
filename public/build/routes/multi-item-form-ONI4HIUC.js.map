@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx?browser", "../../../app/routes/multi-item-form.tsx"],
+  "sourcesContent": ["export { default, meta } from \"/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx\";", "import type { MetaFunction } from \"@remix-run/node\";\n\nconst metaTitle = \"Multi-Item Form\";\nconst metaDescription = \"TODO - Fill in description\";\n\nexport let meta: MetaFunction = () => {\n  return {\n    title: metaTitle,\n    description: metaDescription,\n  };\n};\n\nexport default function MultiItemForm() {\n  return <h1>Multi Item Form</h1>;\n}\n"],
+  "mappings": ";;;;;;AAAA;;;ACAA;AAEA,IAAM,YAAY;AAClB,IAAM,kBAAkB;AAEjB,IAAI,OAAqB,MAAM;AACpC,SAAO;AAAA,IACL,OAAO;AAAA,IACP,aAAa;AAAA;AAAA;AAIF,yBAAyB;AACtC,SAAO,oCAAC,MAAD,MAAI;AAAA;",
+  "names": []
+}
