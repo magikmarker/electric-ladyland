@@ -1,4 +1,4 @@
-import type { FormFieldInput, MultiStepForm } from "electric-ladyland/types";
+import type { FormFieldInput, MultiStepForm } from "../types";
 import { getSession, commitSession, destroySession } from "../session.server";
 import { json } from "@remix-run/node";
 import {
@@ -7,7 +7,7 @@ import {
   seedContextWithInitialValues,
 } from "./logic";
 
-async function formLoaderFunction({
+export async function formLoaderFunction({
   basicOrMultipart,
   request,
   formBlueprint,
@@ -113,5 +113,3 @@ async function formLoaderFunction({
     };
   }
 }
-
-exports.formLoaderFunction = formLoaderFunction;

@@ -4,9 +4,8 @@ import { Form } from "@remix-run/react";
 import { FormField } from "./form-field";
 import { Button } from "~/components/interactive";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { IoCloseSharp } from "react-icons/io5";
 
-function MultipartForm({
+export function MultipartForm({
   context,
   formStructure,
   action,
@@ -86,7 +85,7 @@ function MultipartForm({
   );
 }
 
-function BasicForm({
+export function BasicForm({
   context,
   formStructure,
   action,
@@ -203,6 +202,3 @@ function FormButton({
     </button>
   );
 }
-
-exports.BasicForm = BasicForm;
-exports.MultipartForm = MultipartForm;

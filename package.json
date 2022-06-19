@@ -1,7 +1,7 @@
 {
   "name": "electric-ladyland",
   "version": "0.1.8",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/magikmarker/electric-ladyland"
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
-    "start": "remix-serve build"
+    "start": "remix-serve build",
+    "build-package": "npx tsc -p electric-ladyland/tsconfig.json"
   },
   "dependencies": {
     "@reach/dialog": "^0.17.0",

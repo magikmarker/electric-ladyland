@@ -11,7 +11,7 @@ import { commitSession, getSession, destroySession } from "../session.server";
 import { redirect } from "@remix-run/node";
 import { getFormStage } from "../shared";
 
-async function formActionFunction({
+export async function formActionFunction({
   formType,
   request,
   formBlueprint,
@@ -234,5 +234,3 @@ async function formActionFunction({
     },
   });
 }
-
-exports.formActionFunction = formActionFunction;

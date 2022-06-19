@@ -1,18 +1,16 @@
-import type { FormFieldInput } from "electric-ladyland/types";
-import styles from "./styles.css";
+import type { FormFieldInput } from "./types";
 import { HiddenField } from "./components/hidden";
 import { TextInput } from "./components/text-input";
 import { Radio } from "./components/radio";
 import { CheckboxGroup } from "./components/checkbox-group";
 import { ExpandableList } from "./components/expandable-list";
 import { StatefulRadio } from "./components/stateful-radio";
+// @ts-expect-error Way of the road bubs
+import styles from "./styles.css";
 
 FormField.styles = styles;
 
-exports.formFieldStyles = styles;
-exports.formField = FormField;
-
-export function FormField({
+function FormField({
   field,
   context,
 }: {
@@ -74,3 +72,5 @@ export function FormField({
   }
   return null;
 }
+
+export { FormField, styles as formFieldStyles };
