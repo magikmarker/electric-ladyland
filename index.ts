@@ -1,1 +1,1 @@
-export { FormField } from "./app/services/electric-ladyland/form-field";
+export { FormField } from "./electric-ladyland/form-field";

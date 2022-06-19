@@ -343,7 +343,7 @@ var multiItemStepForm = [
   lessImportantStep
 ];
 
-// app/services/electric-ladyland/action/logic/add-form-values-to-context.ts
+// electric-ladyland/action/logic/add-form-values-to-context.ts
 function addFormValuesToContext({
   formType,
   formBlueprint,
@@ -412,7 +412,7 @@ function addFormValuesToContext({
   }
 }
 
-// app/services/electric-ladyland/action/logic/check-context-for-errors.ts
+// electric-ladyland/action/logic/check-context-for-errors.ts
 function checkContextForErrors({
   context,
   formType,
@@ -460,7 +460,7 @@ function checkContextForErrors({
   return false;
 }
 
-// app/services/electric-ladyland/action/logic/handle-form-data.ts
+// electric-ladyland/action/logic/handle-form-data.ts
 var import_node = require("@remix-run/node");
 async function handleFormData({
   handleDataFn,
@@ -493,10 +493,10 @@ async function handleFormData({
   }
 }
 
-// app/services/electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
+// electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
 var import_node3 = require("@remix-run/node");
 
-// app/services/electric-ladyland/session.server.ts
+// electric-ladyland/session.server.ts
 var import_node2 = require("@remix-run/node");
 var { getSession, commitSession, destroySession } = (0, import_node2.createCookieSessionStorage)({
   cookie: {
@@ -510,7 +510,7 @@ var { getSession, commitSession, destroySession } = (0, import_node2.createCooki
   }
 });
 
-// app/services/electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
+// electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
 async function handleListItemFormStructureOp({
   operationType,
   formBlueprint,
@@ -558,7 +558,7 @@ async function handleListItemFormStructureOp({
   });
 }
 
-// app/services/electric-ladyland/action/logic/honeypot-field-has-value.ts
+// electric-ladyland/action/logic/honeypot-field-has-value.ts
 function honeypotFieldHasValue({ body }) {
   let honeypotField = body.get("given-name");
   if (honeypotField) {
@@ -567,7 +567,7 @@ function honeypotFieldHasValue({ body }) {
   return false;
 }
 
-// app/services/electric-ladyland/shared.ts
+// electric-ladyland/shared.ts
 function getFormStage({
   context,
   formBlueprint
@@ -590,7 +590,7 @@ function convertSingleQuotes(string) {
   return result;
 }
 
-// app/services/electric-ladyland/action/logic/validate-form-field-value.ts
+// electric-ladyland/action/logic/validate-form-field-value.ts
 function validateFormFieldValue({
   formField,
   context
@@ -632,7 +632,7 @@ function validateFieldValue({
   return regexTestPattern.test(value);
 }
 
-// app/services/electric-ladyland/action/index.ts
+// electric-ladyland/action/index.ts
 var import_node4 = require("@remix-run/node");
 async function formActionFunction({
   formType,
@@ -763,10 +763,10 @@ async function formActionFunction({
   });
 }
 
-// app/services/electric-ladyland/styles.css
+// electric-ladyland/styles.css
 var styles_default = "/build/_assets/styles-TXZ7NQ7Z.css";
 
-// app/services/electric-ladyland/components/hidden.tsx
+// electric-ladyland/components/hidden.tsx
 function HiddenField({
   fieldContext,
   fieldBlueprint
@@ -780,7 +780,7 @@ function HiddenField({
   });
 }
 
-// app/services/electric-ladyland/components/shared/display.tsx
+// electric-ladyland/components/shared/display.tsx
 function FieldLabel({
   className,
   children
@@ -845,7 +845,7 @@ function RadioOrCheckboxLabel({
   }, children);
 }
 
-// app/services/electric-ladyland/components/shared/logic.tsx
+// electric-ladyland/components/shared/logic.tsx
 var import_react3 = require("react");
 function createFieldLabel(fieldName) {
   let words = fieldName.split("-");
@@ -898,7 +898,7 @@ function useFormField({
   };
 }
 
-// app/services/electric-ladyland/components/text-input.tsx
+// electric-ladyland/components/text-input.tsx
 function TextInput({
   fieldBlueprint,
   fieldContext,
@@ -958,7 +958,7 @@ function TextInput({
   }) : null);
 }
 
-// app/services/electric-ladyland/components/radio.tsx
+// electric-ladyland/components/radio.tsx
 function Radio({
   fieldBlueprint,
   fieldContext
@@ -990,7 +990,7 @@ function Radio({
   }));
 }
 
-// app/services/electric-ladyland/components/checkbox-group.tsx
+// electric-ladyland/components/checkbox-group.tsx
 function CheckboxGroup({
   fieldBlueprint,
   context
@@ -1016,7 +1016,7 @@ function CheckboxGroup({
   }));
 }
 
-// app/services/electric-ladyland/components/expandable-list.tsx
+// electric-ladyland/components/expandable-list.tsx
 var import_react4 = require("@remix-run/react");
 var import_react5 = require("react");
 var import_dialog = require("@reach/dialog");
@@ -1224,7 +1224,7 @@ function ExpandableList({
   }, "Confirm")))))));
 }
 
-// app/services/electric-ladyland/components/stateful-radio.tsx
+// electric-ladyland/components/stateful-radio.tsx
 var import_react6 = require("react");
 function StatefulRadio({
   fieldBlueprint,
@@ -1292,7 +1292,7 @@ function StatefulRadio({
   }));
 }
 
-// app/services/electric-ladyland/form-field.tsx
+// electric-ladyland/form-field.tsx
 FormField.styles = styles_default;
 function FormField({
   field,
@@ -1347,7 +1347,7 @@ function FormField({
   return null;
 }
 
-// app/services/electric-ladyland/form-wrapper.tsx
+// electric-ladyland/form-wrapper.tsx
 var import_react7 = require("@remix-run/react");
 var import_fa = require("react-icons/fa");
 function MultipartForm({
@@ -1453,10 +1453,10 @@ function FormButton({
   }, children);
 }
 
-// app/services/electric-ladyland/loader/index.ts
+// electric-ladyland/loader/index.ts
 var import_node5 = require("@remix-run/node");
 
-// app/services/electric-ladyland/loader/logic/check-for-relevant-context.ts
+// electric-ladyland/loader/logic/check-for-relevant-context.ts
 function checkForRelevantContext({
   basicOrMultipart,
   formBlueprint,
@@ -1511,7 +1511,7 @@ function checkContextForMismatch({
   return false;
 }
 
-// app/services/electric-ladyland/loader/logic/seed-context-with-initial-values.ts
+// electric-ladyland/loader/logic/seed-context-with-initial-values.ts
 function seedContextWithInitialValues({
   basicOrMultipart,
   formBlueprint
@@ -1571,7 +1571,7 @@ function addFieldToContext({
   }
 }
 
-// app/services/electric-ladyland/loader/logic/get-form-stage.ts
+// electric-ladyland/loader/logic/get-form-stage.ts
 function getFormStage2({
   context,
   formBlueprint
@@ -1581,7 +1581,7 @@ function getFormStage2({
   return formStage;
 }
 
-// app/services/electric-ladyland/loader/index.ts
+// electric-ladyland/loader/index.ts
 async function formLoaderFunction({
   basicOrMultipart,
   request,
@@ -1665,7 +1665,7 @@ var links = () => {
   return [
     {
       rel: "stylesheet",
-      href: FormField.styles
+      href: styles_default
     }
   ];
 };
@@ -1721,7 +1721,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "a6f2751f", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-BIQLX3JP.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-A6F2751F.js" };
+var assets_manifest_default = { "version": "57ea6d99", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-VEF6WXVA.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-57EA6D99.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };

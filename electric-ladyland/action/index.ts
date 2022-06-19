@@ -11,7 +11,7 @@ import {
   commitSession,
   getSession,
   destroySession,
-} from "~/services/electric-ladyland/session.server";
+} from "electric-ladyland/session.server";
 import { redirect } from "@remix-run/node";
 import { getFormStage } from "../shared";
 

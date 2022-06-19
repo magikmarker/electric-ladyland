@@ -1,5 +1,5 @@
-import type { Step, MultiStepForm } from "~/services/electric-ladyland/types";
-import { validation } from "~/services/electric-ladyland/validation";
+import type { Step, MultiStepForm } from "electric-ladyland/types";
+import { validation } from "electric-ladyland/validation";
 
 const clientDetailsStep: Step = {
   fields: [
@@ -305,7 +305,7 @@ const partsUsedStep: Step = {
     {
       name: "parts-used",
       type: "expandable-list",
-      listLabel: "Parts Used",
+      label: "Parts Used",
       addItemLabel: "Add Part",
       editItemLabel: "Edit Part",
       addOrEditItemModalLabel: "Add or Edit Part",
@@ -379,7 +379,7 @@ const shopSuppliesStep: Step = {
     {
       name: "shop-supplies-used",
       type: "expandable-list",
-      listLabel: "Shop Supplies",
+      label: "Shop Supplies",
       addItemLabel: "Add Item",
       editItemLabel: "Edit Item",
       addOrEditItemModalLabel: "Add or Edit Item",

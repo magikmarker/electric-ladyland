@@ -1,4 +1,4 @@
-import { MultiStepForm } from "~/services/electric-ladyland/types";
+import type { MultiStepForm } from "electric-ladyland/types";
 
 export function getFormStage({
   context,

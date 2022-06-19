@@ -1,4 +1,4 @@
-import type { FormFieldInput } from "~/services/electric-ladyland/types";
+import type { FormFieldInput } from "electric-ladyland/types";
 import styles from "./styles.css";
 import { HiddenField } from "./components/hidden";
 import { TextInput } from "./components/text-input";
@@ -9,7 +9,9 @@ import { StatefulRadio } from "./components/stateful-radio";
 
 FormField.styles = styles;
 
-export function FormField({
+export { FormField, styles as formFieldStyles };
+
+function FormField({
   field,
   context,
 }: {

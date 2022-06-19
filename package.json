@@ -1,6 +1,7 @@
 {
   "name": "electric-ladyland",
   "version": "0.1.1",
+  "main": "electric-ladyland.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/magikmarker/electric-ladyland"

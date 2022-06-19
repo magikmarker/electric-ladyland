@@ -1,5 +1,5 @@
-import type { MultiStepForm, Step } from "~/services/electric-ladyland/types";
-import { validation } from "~/services/electric-ladyland/validation";
+import type { MultiStepForm, Step } from "electric-ladyland/types";
+import { validation } from "electric-ladyland/validation";
 
 const notImportantStep: Step = {
   fields: [

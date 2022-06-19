@@ -7,10 +7,10 @@ import type {
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { multiItemStepForm } from "~/forms/multi-item-form";
-import { formActionFunction } from "~/services/electric-ladyland/action";
-import { FormField } from "~/services/electric-ladyland/form-field";
-import { MultipartForm } from "~/services/electric-ladyland/form-wrapper";
-import { formLoaderFunction } from "~/services/electric-ladyland/loader";
+import { formActionFunction } from "electric-ladyland/action";
+import { formFieldStyles } from "electric-ladyland/form-field";
+import { MultipartForm } from "electric-ladyland/form-wrapper";
+import { formLoaderFunction } from "electric-ladyland/loader";
 
 const metaTitle = "Multi-Item Form";
 const metaDescription = "TODO - Fill in description";
@@ -26,7 +26,7 @@ export let links: LinksFunction = () => {
   return [
     {
       rel: "stylesheet",
-      href: FormField.styles,
+      href: formFieldStyles,
     },
   ];
 };

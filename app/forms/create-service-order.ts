@@ -1,4 +1,4 @@
-import { MultiStepForm, Step } from "~/services/electric-ladyland/types";
+import { MultiStepForm, Step } from "electric-ladyland/types";
 
 let selectDayStep: Step = {
   fields: [
