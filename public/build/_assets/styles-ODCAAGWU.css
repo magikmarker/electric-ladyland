@@ -63,6 +63,7 @@
   position: absolute;
   background-color: var(--color-neutral-6);
   bottom: 32px;
+  padding-left: 8px;
 }
 
 .el-form-left-icon {

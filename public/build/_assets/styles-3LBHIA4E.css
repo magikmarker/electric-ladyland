@@ -44,25 +44,13 @@
   padding: 14px;
   font-weight: 600;
   color: white;
-  transform: scale(1);
-  transition: transform 400ms;
-}
-
-@media (min-width: 360px) {
-  .el-form-button {
-  }
-}
-
-@media (min-width: 550px) {
-  .el-form-button {
-    padding: 14px 18px;
-  }
 }
 
 .el-form-button-back {
   position: absolute;
   background-color: var(--color-neutral-6);
   bottom: 32px;
+  padding-left: 8px;
 }
 
 .el-form-left-icon {
@@ -78,11 +66,6 @@
 .el-form-button-forward {
   margin-left: auto;
   background-color: var(--color-primary-5);
-}
-@media (hover: hover) and (pointer: fine) {
-  .el-form-button:hover {
-    transform: scale(1.05);
-  }
 }
 
 .el-field-item {

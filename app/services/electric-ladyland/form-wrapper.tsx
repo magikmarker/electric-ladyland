@@ -20,7 +20,7 @@ export function MultipartForm({
   console.log({ formStructure });
 
   return (
-    <div className="form-container relative">
+    <div className="el-form-wrapper">
       <FormWrapper reloadDocument={reloadDocument} action={action}>
         <HoneypotField />
         {formStructure.map((field: FormFieldInput) => {
@@ -39,13 +39,13 @@ export function MultipartForm({
             context.formStage === "middle") && (
             <FormButton
               dataTest="next"
-              className="ml-auto bg-primary-5 pr-4"
+              className="el-form-button-forward"
               name="submit-type"
               type="submit"
               value="next"
             >
               {context.nextButtonText}
-              <span className="ml-2 block mm:text-lg">
+              <span className="el-form-right-icon">
                 <FaChevronRight aria-hidden="true" />
               </span>
             </FormButton>
@@ -53,13 +53,13 @@ export function MultipartForm({
           {context.formStage === "end" && (
             <FormButton
               dataTest="submit"
-              className=" forward-button-wrapper ml-auto bg-primary-5 pr-4"
+              className="el-form-button-forward"
               name="submit-type"
               type="submit"
               value="submit"
             >
               Submit
-              <span className=" ml-2 block mm:text-lg">
+              <span className="el-form-right-icon">
                 <FaChevronRight aria-hidden="true" />
               </span>
             </FormButton>
@@ -70,12 +70,12 @@ export function MultipartForm({
         <Form method="post">
           <FormButton
             dataTest="back"
-            className="absolute-button bottom-0 bg-neutral-4 pl-4"
+            className="el-form-button-back"
             name="submit-type"
             type="submit"
             value="back"
           >
-            <span className="mr-2 block mm:text-lg">
+            <span className="el-form-left-icon">
               <FaChevronLeft aria-hidden="true" />
             </span>
             {context.backButtonText}
@@ -148,18 +148,13 @@ function FormWrapper({
 }) {
   if (reloadDocument) {
     return (
-      <Form
-        reloadDocument
-        action={action}
-        className="relative w-content"
-        method="post"
-      >
+      <Form reloadDocument action={action} method="post">
         {children}
       </Form>
     );
   }
   return (
-    <Form action={action} className="relative w-content" method="post">
+    <Form action={action} method="post">
       {children}
     </Form>
   );
@@ -199,9 +194,7 @@ function FormButton({
   return (
     <button
       data-test={dataTest}
-      className={`font-display flex items-center rounded-md border-0 py-3 px-5 font-semibold text-white mm:text-lg${
-        className ? " " + className : ""
-      }`}
+      className={`el-form-button${className ? " " + className : ""}`}
       name={name}
       type={type}
       value={value}

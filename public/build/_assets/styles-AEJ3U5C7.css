@@ -55,7 +55,7 @@
 
 @media (min-width: 550px) {
   .el-form-button {
-    padding: 14px 18px;
+    padding: 14px 22px;
   }
 }
 
@@ -63,6 +63,7 @@
   position: absolute;
   background-color: var(--color-neutral-6);
   bottom: 32px;
+  padding-left: 8px;
 }
 
 .el-form-left-icon {

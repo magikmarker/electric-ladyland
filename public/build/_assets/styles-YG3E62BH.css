@@ -10,7 +10,7 @@
   --input-font-size-mm: 1.05em;
 
   --color-neutral-6: hsl(208 15% 33%);
-  --color-primary-5: hsl(197 100% 45%);
+
   --color-danger-6: hsl(354 83% 45%);
 }
 
@@ -26,13 +26,6 @@
   }
 }
 
-@media (min-width: 565px) {
-  .el-form-wrapper {
-    max-width: 480px;
-    margin: 0 auto;
-  }
-}
-
 .el-form-button {
   font-family: var(--input-label-font);
   font-weight: 700;
@@ -44,45 +37,12 @@
   padding: 14px;
   font-weight: 600;
   color: white;
-  transform: scale(1);
-  transition: transform 400ms;
-}
-
-@media (min-width: 360px) {
-  .el-form-button {
-  }
-}
-
-@media (min-width: 550px) {
-  .el-form-button {
-    padding: 14px 18px;
-  }
 }
 
 .el-form-button-back {
   position: absolute;
-  background-color: var(--color-neutral-6);
-  bottom: 32px;
-}
-
-.el-form-left-icon {
-  margin-right: 10px;
-  margin-bottom: -4px;
-}
-
-.el-form-right-icon {
-  margin-left: 10px;
-  margin-bottom: -4px;
-}
-
-.el-form-button-forward {
-  margin-left: auto;
-  background-color: var(--color-primary-5);
-}
-@media (hover: hover) and (pointer: fine) {
-  .el-form-button:hover {
-    transform: scale(1.05);
-  }
+  bottom: 0;
+  padding-left: 8px;
 }
 
 .el-field-item {
@@ -127,7 +87,6 @@
   font-size: var(--input-font-size);
   font-family: var(--input-body-font);
   border-radius: var(--input-border-radius);
-  padding: 4px 6px;
 }
 
 .el-radio-or-checkbox-wrapper {
@@ -147,19 +106,8 @@
   .el-form-field-label,
   .el-form-field-description,
   .el-radio-or-checkbox-label,
-  .el-text-input,
-  .el-form-button {
+  .el-text-input {
     font-size: 1.1em;
-  }
-}
-
-@media (min-width: 565px) {
-  .el-form-field-label,
-  .el-form-field-description,
-  .el-radio-or-checkbox-label,
-  .el-text-input,
-  .el-form-button {
-    font-size: 1.2em;
   }
 }
 

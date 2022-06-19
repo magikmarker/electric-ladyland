@@ -715,7 +715,7 @@ async function formActionFunction({
 }
 
 // app/services/electric-ladyland/styles.css
-var styles_default = "/build/_assets/styles-AVGWHGU4.css";
+var styles_default = "/build/_assets/styles-5LA3TAKT.css";
 
 // app/services/electric-ladyland/components/hidden.tsx
 function HiddenField({
@@ -1293,7 +1293,7 @@ function MultipartForm({
 }) {
   console.log({ formStructure });
   return /* @__PURE__ */ React.createElement("div", {
-    className: "form-container relative"
+    className: "el-form-wrapper"
   }, /* @__PURE__ */ React.createElement(FormWrapper, {
     reloadDocument,
     action: action2
@@ -1311,34 +1311,34 @@ function MultipartForm({
     className: "forward-button-wrapper mt-10 flex w-full"
   }, (context.formStage === "beginning" || context.formStage === "middle") && /* @__PURE__ */ React.createElement(FormButton, {
     dataTest: "next",
-    className: "ml-auto bg-primary-5 pr-4",
+    className: "el-form-button-forward",
     name: "submit-type",
     type: "submit",
     value: "next"
   }, context.nextButtonText, /* @__PURE__ */ React.createElement("span", {
-    className: "ml-2 block mm:text-lg"
+    className: "el-form-right-icon"
   }, /* @__PURE__ */ React.createElement(import_fa.FaChevronRight, {
     "aria-hidden": "true"
   }))), context.formStage === "end" && /* @__PURE__ */ React.createElement(FormButton, {
     dataTest: "submit",
-    className: " forward-button-wrapper ml-auto bg-primary-5 pr-4",
+    className: "el-form-button-forward",
     name: "submit-type",
     type: "submit",
     value: "submit"
   }, "Submit", /* @__PURE__ */ React.createElement("span", {
-    className: " ml-2 block mm:text-lg"
+    className: "el-form-right-icon"
   }, /* @__PURE__ */ React.createElement(import_fa.FaChevronRight, {
     "aria-hidden": "true"
   }))))), (context.formStage === "middle" || context.formStage === "end") && /* @__PURE__ */ React.createElement(import_react7.Form, {
     method: "post"
   }, /* @__PURE__ */ React.createElement(FormButton, {
     dataTest: "back",
-    className: "absolute-button bottom-0 bg-neutral-4 pl-4",
+    className: "el-form-button-back",
     name: "submit-type",
     type: "submit",
     value: "back"
   }, /* @__PURE__ */ React.createElement("span", {
-    className: "mr-2 block mm:text-lg"
+    className: "el-form-left-icon"
   }, /* @__PURE__ */ React.createElement(import_fa.FaChevronLeft, {
     "aria-hidden": "true"
   })), context.backButtonText)));
@@ -1352,13 +1352,11 @@ function FormWrapper({
     return /* @__PURE__ */ React.createElement(import_react7.Form, {
       reloadDocument: true,
       action: action2,
-      className: "relative w-content",
       method: "post"
     }, children);
   }
   return /* @__PURE__ */ React.createElement(import_react7.Form, {
     action: action2,
-    className: "relative w-content",
     method: "post"
   }, children);
 }
@@ -1383,7 +1381,7 @@ function FormButton({
 }) {
   return /* @__PURE__ */ React.createElement("button", {
     "data-test": dataTest,
-    className: `font-display flex items-center rounded-md border-0 py-3 px-5 font-semibold text-white mm:text-lg${className ? " " + className : ""}`,
+    className: `el-form-button${className ? " " + className : ""}`,
     name,
     type,
     value
@@ -1658,7 +1656,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "9efb9093", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-OFJSNU2S.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-9EFB9093.js" };
+var assets_manifest_default = { "version": "807f830e", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-IGAUH5G2.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-807F830E.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };
