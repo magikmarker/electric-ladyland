@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { FormFieldInput } from "./types";
+import type { ReactNode } from "react";
+import type { FormFieldInput } from "./types";
 import { Form } from "@remix-run/react";
 import { FormField } from "./form-field";
 import { Button } from "~/components/interactive";

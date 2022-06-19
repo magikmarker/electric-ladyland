@@ -3,8 +3,8 @@ import {
   handleFormData,
   handleListItemFormStructureOp,
   honeypotFieldHasValue,
-} from "./action-utils";
-import type { FormFieldInput, MultiStepForm } from "./types";
+} from "./logic";
+import type { FormFieldInput, MultiStepForm } from "../types";
 import {
   commitSession,
   getSession,
@@ -15,7 +15,7 @@ import {
   addFormValuesToContext,
   validateFormFieldValue,
 } from "~/services/electric-ladyland/action-utils";
-import { getFormStage } from "./shared";
+import { getFormStage } from "../shared";
 
 async function formActionFunction({
   formType,

@@ -107,7 +107,7 @@ __export(multi_item_form_exports, {
   loader: () => loader,
   meta: () => meta2
 });
-var import_node5 = require("@remix-run/node");
+var import_node7 = require("@remix-run/node");
 var import_react8 = require("@remix-run/react");
 
 // app/forms/multi-item-form.ts
@@ -294,8 +294,160 @@ var multiItemStepForm = [
   lessImportantStep
 ];
 
-// app/services/electric-ladyland/action-utils.ts
+// app/services/electric-ladyland/action/logic/check-context-for-errors.ts
+function checkContextForErrors({
+  context,
+  formType,
+  formBlueprint
+}) {
+  var _a, _b, _c, _d;
+  let errorsPresent = false;
+  if (formType === "basic") {
+    for (const fieldValue in context) {
+      if (((_a = fieldValue == null ? void 0 : fieldValue.errors) == null ? void 0 : _a.length) >= 1) {
+        errorsPresent = true;
+      }
+      if (errorsPresent) {
+        return true;
+      }
+    }
+  }
+  if (formType === "multipart") {
+    let addFieldNameToValidateToArray = function(field, fieldsToValidate2) {
+      fieldsToValidate2.push(field.name);
+      if (field.type === "stateful-radio") {
+        let selectedIndex = field.options.indexOf(context[`${field.name}`].value);
+        field.dependentChildren[selectedIndex].forEach((nestedField) => {
+          if (nestedField) {
+            fieldsToValidate2.push(nestedField.name);
+          }
+        });
+      }
+    };
+    const currentFormStep = context.currentStep;
+    let fieldsToValidate = [];
+    for (const field of (_b = formBlueprint[currentFormStep]) == null ? void 0 : _b.fields) {
+      if (context)
+        addFieldNameToValidateToArray(field, fieldsToValidate);
+    }
+    for (const fieldToValidate of fieldsToValidate) {
+      if (((_d = (_c = context[`${fieldToValidate}`]) == null ? void 0 : _c.errors) == null ? void 0 : _d.length) >= 1) {
+        errorsPresent = true;
+      }
+      if (errorsPresent) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// app/services/electric-ladyland/action/logic/handle-form-data.ts
+var import_node = require("@remix-run/node");
+async function handleFormData({
+  handleDataFn,
+  context,
+  successRedirectPath,
+  session,
+  commitSession: commitSession2,
+  request
+}) {
+  let handleDataResult = await handleDataFn(context, request);
+  let [success, message] = handleDataResult;
+  if (success) {
+    context.dataHandlerSuccessMessage = message;
+    context.dataHandlerErrorMessage = "";
+    session.set("context", context);
+    return (0, import_node.redirect)(successRedirectPath, {
+      headers: {
+        "Set-Cookie": await commitSession2(session)
+      }
+    });
+  } else {
+    context.dataHandlerSuccessMessage = "";
+    context.dataHandlerErrorMessage = message;
+    session.set("context", context);
+    return (0, import_node.json)({}, {
+      headers: {
+        "Set-Cookie": await commitSession2(session)
+      }
+    });
+  }
+}
+
+// app/services/electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
+var import_node3 = require("@remix-run/node");
+
+// app/services/electric-ladyland/session.server.ts
 var import_node2 = require("@remix-run/node");
+var { getSession, commitSession, destroySession } = (0, import_node2.createCookieSessionStorage)({
+  cookie: {
+    name: "__new_call",
+    maxAge: 30,
+    secure: false,
+    httpOnly: true,
+    path: "/",
+    sameSite: "lax",
+    secrets: [process.env.FORM_SESSION_SECRET ?? "S3cr3tS3cr3ts"]
+  }
+});
+
+// app/services/electric-ladyland/action/logic/handle-list-item-form-structure-op.ts
+async function handleListItemFormStructureOp({
+  operationType,
+  formBlueprint,
+  context,
+  session,
+  pathname,
+  body
+}) {
+  var _a, _b;
+  let expandableList = (_a = formBlueprint[context == null ? void 0 : context.currentStep]) == null ? void 0 : _a.fields.find((item) => {
+    return item.type === "expandable-list";
+  });
+  let expandableListArr = ((_b = context == null ? void 0 : context[expandableList.name]) == null ? void 0 : _b.value) ?? [];
+  if (operationType === "add-item-to-list") {
+    let listItemObject = {};
+    expandableList.listItemStructure.forEach((field) => {
+      listItemObject[field.name] = {
+        value: body.get(field.name),
+        errors: []
+      };
+    });
+    expandableListArr.push(listItemObject);
+  } else if (operationType === "edit-list-item") {
+    let indexToChange = body.get("index-to-change");
+    expandableList.listItemStructure.forEach((field) => {
+      expandableListArr[Number(indexToChange)][field.name] = {
+        value: body.get(field.name),
+        errors: []
+      };
+    });
+  } else if (operationType === "delete-list-item") {
+    let indexToDelete = body.get("index-to-delete");
+    expandableListArr.splice(Number(indexToDelete), 1);
+  }
+  session.set("context", __spreadProps(__spreadValues({}, context), {
+    [expandableList.name]: {
+      value: expandableListArr,
+      errors: []
+    }
+  }));
+  return (0, import_node3.redirect)(pathname, {
+    headers: {
+      "Set-Cookie": await commitSession(session)
+    }
+  });
+}
+
+// app/services/electric-ladyland/action/logic/honeypot-field-has-value.ts
+function honeypotFieldHasValue({ body }) {
+  let honeypotField = body.get("given-name");
+  if (honeypotField) {
+    return true;
+  }
+  return false;
+}
 
 // app/services/electric-ladyland/shared.ts
 function getFormStage({
@@ -320,28 +472,11 @@ function convertSingleQuotes(string) {
   return result;
 }
 
-// app/services/electric-ladyland/session.server.ts
-var import_node = require("@remix-run/node");
-var { getSession, commitSession, destroySession } = (0, import_node.createCookieSessionStorage)({
-  cookie: {
-    name: "__new_call",
-    maxAge: 30,
-    secure: false,
-    httpOnly: true,
-    path: "/",
-    sameSite: "lax",
-    secrets: [process.env.FORM_SESSION_SECRET ?? "S3cr3tS3cr3ts"]
-  }
-});
+// app/services/electric-ladyland/action/index.ts
+var import_node5 = require("@remix-run/node");
 
 // app/services/electric-ladyland/action-utils.ts
-function honeypotFieldHasValue({ body }) {
-  let honeypotField = body.get("given-name");
-  if (honeypotField) {
-    return true;
-  }
-  return false;
-}
+var import_node4 = require("@remix-run/node");
 function addFormValuesToContext({
   formType,
   formBlueprint,
@@ -449,131 +584,8 @@ function validateFormFieldValue({
     }
   }
 }
-function checkContextForErrors({
-  context,
-  formType,
-  formBlueprint
-}) {
-  var _a, _b, _c, _d;
-  let errorsPresent = false;
-  if (formType === "basic") {
-    for (const fieldValue in context) {
-      if (((_a = fieldValue == null ? void 0 : fieldValue.errors) == null ? void 0 : _a.length) >= 1) {
-        errorsPresent = true;
-      }
-      if (errorsPresent) {
-        return true;
-      }
-    }
-  }
-  if (formType === "multipart") {
-    let addFieldNameToValidateToArray = function(field, fieldsToValidate2) {
-      fieldsToValidate2.push(field.name);
-      if (field.type === "stateful-radio") {
-        let selectedIndex = field.options.indexOf(context[`${field.name}`].value);
-        field.dependentChildren[selectedIndex].forEach((nestedField) => {
-          if (nestedField) {
-            fieldsToValidate2.push(nestedField.name);
-          }
-        });
-      }
-    };
-    const currentFormStep = context.currentStep;
-    let fieldsToValidate = [];
-    for (const field of (_b = formBlueprint[currentFormStep]) == null ? void 0 : _b.fields) {
-      if (context)
-        addFieldNameToValidateToArray(field, fieldsToValidate);
-    }
-    for (const fieldToValidate of fieldsToValidate) {
-      if (((_d = (_c = context[`${fieldToValidate}`]) == null ? void 0 : _c.errors) == null ? void 0 : _d.length) >= 1) {
-        errorsPresent = true;
-      }
-      if (errorsPresent) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-async function handleFormData({
-  handleDataFn,
-  context,
-  successRedirectPath,
-  session,
-  commitSession: commitSession2,
-  request
-}) {
-  let handleDataResult = await handleDataFn(context, request);
-  let [success, message] = handleDataResult;
-  if (success) {
-    context.dataHandlerSuccessMessage = message;
-    context.dataHandlerErrorMessage = "";
-    session.set("context", context);
-    return (0, import_node2.redirect)(successRedirectPath, {
-      headers: {
-        "Set-Cookie": await commitSession2(session)
-      }
-    });
-  } else {
-    context.dataHandlerSuccessMessage = "";
-    context.dataHandlerErrorMessage = message;
-    session.set("context", context);
-    return (0, import_node2.json)({}, {
-      headers: {
-        "Set-Cookie": await commitSession2(session)
-      }
-    });
-  }
-}
-async function handleListItemFormStructureOp({
-  operationType,
-  formBlueprint,
-  context,
-  session,
-  pathname,
-  body
-}) {
-  var _a, _b;
-  let expandableList = (_a = formBlueprint[context == null ? void 0 : context.currentStep]) == null ? void 0 : _a.fields.find((item) => {
-    return item.type === "expandable-list";
-  });
-  let expandableListArr = ((_b = context == null ? void 0 : context[expandableList.name]) == null ? void 0 : _b.value) ?? [];
-  if (operationType === "add-item-to-list") {
-    let listItemObject = {};
-    expandableList.listItemStructure.forEach((field) => {
-      listItemObject[field.name] = {
-        value: body.get(field.name),
-        errors: []
-      };
-    });
-    expandableListArr.push(listItemObject);
-  } else if (operationType === "edit-list-item") {
-    let indexToChange = body.get("index-to-change");
-    expandableList.listItemStructure.forEach((field) => {
-      expandableListArr[Number(indexToChange)][field.name] = {
-        value: body.get(field.name),
-        errors: []
-      };
-    });
-  } else if (operationType === "delete-list-item") {
-    let indexToDelete = body.get("index-to-delete");
-    expandableListArr.splice(Number(indexToDelete), 1);
-  }
-  session.set("context", __spreadProps(__spreadValues({}, context), {
-    [expandableList.name]: {
-      value: expandableListArr,
-      errors: []
-    }
-  }));
-  return (0, import_node2.redirect)(pathname, {
-    headers: {
-      "Set-Cookie": await commitSession(session)
-    }
-  });
-}
 
-// app/services/electric-ladyland/action-function.ts
-var import_node3 = require("@remix-run/node");
+// app/services/electric-ladyland/action/index.ts
 async function formActionFunction({
   formType,
   request,
@@ -590,7 +602,7 @@ async function formActionFunction({
   if (formType === "multipart" && Object.keys(context).length < 1) {
     let { pathname: pathname2 } = new URL(request.url);
     console.log("No context found in session, redirecting to start");
-    return (0, import_node3.redirect)(pathname2, {
+    return (0, import_node5.redirect)(pathname2, {
       headers: {
         "Set-Cookie": await destroySession(session)
       }
@@ -599,7 +611,7 @@ async function formActionFunction({
   const body = await request.formData();
   let honeypotFieldHit = honeypotFieldHasValue({ body });
   if (honeypotFieldHit) {
-    return (0, import_node3.redirect)("/");
+    return (0, import_node5.redirect)("/");
   }
   const operationType = body.get("operation-type");
   if (operationType) {
@@ -617,19 +629,28 @@ async function formActionFunction({
     if (submitType === "back") {
       context.currentStep -= 1;
       session.set("context", context);
-      return (0, import_node3.redirect)(pathname, {
+      return (0, import_node5.redirect)(pathname, {
         headers: {
           "Set-Cookie": await commitSession(session)
         }
       });
     }
   }
-  await addFormValuesToContext({
-    formType,
-    formBlueprint,
-    body,
-    context
-  });
+  if (formType === "basic") {
+    await addFormValuesToContext({
+      formType,
+      formBlueprint,
+      body,
+      context
+    });
+  } else {
+    await addFormValuesToContext({
+      formType,
+      formBlueprint,
+      body,
+      context
+    });
+  }
   if (formType === "basic") {
     console.log("basically");
     formBlueprint.forEach((formField) => {
@@ -679,7 +700,7 @@ async function formActionFunction({
       context.currentStep += 1;
       console.log({ currentStep: context.currentStep });
       session.set("context", context);
-      return (0, import_node3.redirect)(pathname, {
+      return (0, import_node5.redirect)(pathname, {
         headers: {
           "Set-Cookie": await commitSession(session)
         }
@@ -687,7 +708,7 @@ async function formActionFunction({
     }
   }
   console.log("you're here?");
-  return (0, import_node3.redirect)(pathname, {
+  return (0, import_node5.redirect)(pathname, {
     headers: {
       "Set-Cookie": await commitSession(session)
     }
@@ -1262,7 +1283,7 @@ function FormField({
   return null;
 }
 
-// app/services/electric-ladyland/form-types.tsx
+// app/services/electric-ladyland/form-wrapper.tsx
 var import_react7 = require("@remix-run/react");
 var import_fa = require("react-icons/fa");
 function MultipartForm({
@@ -1371,7 +1392,7 @@ function FormButton({
 }
 
 // app/services/electric-ladyland/loader/index.ts
-var import_node4 = require("@remix-run/node");
+var import_node6 = require("@remix-run/node");
 
 // app/services/electric-ladyland/loader/logic/check-for-relevant-context.ts
 function checkForRelevantContext({
@@ -1541,7 +1562,7 @@ async function formLoaderFunction({
     let formStage = getFormStage2({ context, formBlueprint });
     if (context.currentStep > 0 && Object.keys(context).length < 1) {
       console.log("You shouldn't be here");
-      return (0, import_node4.json)({}, {
+      return (0, import_node6.json)({}, {
         headers: {
           "Set-Cookie": await destroySession(session)
         }
@@ -1593,7 +1614,7 @@ var loader = async ({ request }) => {
     formBlueprint: multiItemStepForm
   });
   console.log({ currentStepBlueprint, multiItemStepForm, context });
-  return (0, import_node5.json)({
+  return (0, import_node7.json)({
     currentStepBlueprint,
     context
   }, {
@@ -1638,7 +1659,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "b198a369", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-LLQKUGHL.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-B198A369.js" };
+var assets_manifest_default = { "version": "9efb9093", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-OFJSNU2S.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-9EFB9093.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };

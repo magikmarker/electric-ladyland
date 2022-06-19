@@ -7,9 +7,9 @@ import type {
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { multiItemStepForm } from "~/forms/multi-item-form";
-import { formActionFunction } from "~/services/electric-ladyland/action-function";
+import { formActionFunction } from "~/services/electric-ladyland/action";
 import { FormField } from "~/services/electric-ladyland/form-field";
-import { MultipartForm } from "~/services/electric-ladyland/form-types";
+import { MultipartForm } from "~/services/electric-ladyland/form-wrapper";
 import { formLoaderFunction } from "~/services/electric-ladyland/loader";
 
 const metaTitle = "Multi-Item Form";
