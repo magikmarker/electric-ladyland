@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["browser-route-module:/Users/markjensen/shared/electric-ladyland/app/routes/index.tsx?browser", "../../../app/routes/index.tsx"],
+  "sourcesContent": ["export { default } from \"/Users/markjensen/shared/electric-ladyland/app/routes/index.tsx\";", "import { Link } from \"@remix-run/react\";\n\nexport default function Index() {\n  return (\n    <div>\n      <h1>Remixed Form</h1>\n      <ul>\n        <li>\n          <Link to=\"/multi-item-form\">Multi-Item Form</Link>\n        </li>\n      </ul>\n    </div>\n  );\n}\n"],
+  "mappings": ";;;;;;;AAAA;;;ACAA;AAEe,iBAAiB;AAC9B,SACE,oCAAC,OAAD,MACE,oCAAC,MAAD,MAAI,iBACJ,oCAAC,MAAD,MACE,oCAAC,MAAD,MACE,oCAAC,MAAD;AAAA,IAAM,IAAG;AAAA,KAAmB;AAAA;",
+  "names": []
+}

@@ -10,6 +10,8 @@ import {
 import { json } from "@remix-run/node";
 import { addFieldToContext, checkForFieldNameAndValue } from "./loader-utils";
 import { getFormStage } from "./shared";
+import { checkForRelevantContext } from "./loader/logic/check-for-relevant-context";
+import { seedContextWithInitialValues } from "./loader/logic";
 
 async function formLoaderFunction({
   basicOrMultipart,
@@ -36,18 +38,40 @@ async function formLoaderFunction({
   // Check to see if the current context matches the current
   // form structure. If it doesn't match, there is a good chance
   // that there is no context or we are coming from a different form
-  context = checkExistingContext({ formBlueprint, basicOrMultipart, context });
+  if (basicOrMultipart === "basic") {
+    context = checkForRelevantContext({
+      formBlueprint,
+      basicOrMultipart,
+      context,
+    });
+  } else {
+    context = checkForRelevantContext({
+      formBlueprint,
+      basicOrMultipart,
+      context,
+    });
+  }
 
   // If the context object doesn't have any length, we
   // know that it is empty and we need to seed it
   if (Object.keys(context).length < 1) {
-    context = seedContextWithInitialValues({ formBlueprint, basicOrMultipart });
+    if (basicOrMultipart === "basic") {
+      context = seedContextWithInitialValues({
+        formBlueprint,
+        basicOrMultipart,
+      });
+    } else {
+      context = seedContextWithInitialValues({
+        formBlueprint,
+        basicOrMultipart,
+      });
+    }
   }
 
   console.log("here's your context now", context);
 
   // Get the current step
-  context?.currentStep ?? 0;
+  context.currentStep = context?.currentStep ?? 0;
 
   // We should never have a negative number
   // for the current step
@@ -172,57 +196,57 @@ function checkExistingContext({
   return context;
 }
 
-function seedContextWithInitialValues({
-  basicOrMultipart,
-  formBlueprint,
-}: {
-  basicOrMultipart: "multipart";
-  formBlueprint: MultiStepForm;
-}): any;
-function seedContextWithInitialValues({
-  basicOrMultipart,
-  formBlueprint,
-}: {
-  basicOrMultipart: "basic";
-  formBlueprint: FormFieldInput[];
-}): any;
-function seedContextWithInitialValues({
-  basicOrMultipart,
-  formBlueprint,
-}: {
-  basicOrMultipart: "multipart" | "basic";
-  formBlueprint: MultiStepForm | FormFieldInput[];
-}): any {
-  // Give the context object initial values
-  let context: any = {};
+// function seedContextWithInitialValues({
+//   basicOrMultipart,
+//   formBlueprint,
+// }: {
+//   basicOrMultipart: "multipart";
+//   formBlueprint: MultiStepForm;
+// }): any;
+// function seedContextWithInitialValues({
+//   basicOrMultipart,
+//   formBlueprint,
+// }: {
+//   basicOrMultipart: "basic";
+//   formBlueprint: FormFieldInput[];
+// }): any;
+// function seedContextWithInitialValues({
+//   basicOrMultipart,
+//   formBlueprint,
+// }: {
+//   basicOrMultipart: "multipart" | "basic";
+//   formBlueprint: MultiStepForm | FormFieldInput[];
+// }): any {
+//   // Give the context object initial values
+//   let context: any = {};
 
-  if (basicOrMultipart === "multipart") {
-    for (const step of formBlueprint) {
-      // console.log({ step });
+//   if (basicOrMultipart === "multipart") {
+//     for (const step of formBlueprint) {
+//       // console.log({ step });
 
-      // @ts-ignore
-      for (const field of step?.fields) {
-        // console.log({ field });
+//       // @ts-ignore
+//       for (const field of step?.fields) {
+//         // console.log({ field });
 
-        if (field) {
-          addFieldToContext({ field, context });
-        }
-      }
-    }
+//         if (field) {
+//           addFieldToContext({ field, context });
+//         }
+//       }
+//     }
 
-    context.currentStep = 0;
-  }
+//     context.currentStep = 0;
+//   }
 
-  if (basicOrMultipart === "basic") {
-    for (const nestedField of formBlueprint) {
-      if (typeof nestedField === "object") {
-        // @ts-ignore
-        addFieldToContext({ field: nestedField, context });
-      }
-    }
-  }
+//   if (basicOrMultipart === "basic") {
+//     for (const nestedField of formBlueprint) {
+//       if (typeof nestedField === "object") {
+//         // @ts-ignore
+//         addFieldToContext({ field: nestedField, context });
+//       }
+//     }
+//   }
 
-  return context;
-}
+//   return context;
+// }
 
 export { formLoaderFunction };

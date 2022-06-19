@@ -1,0 +1,59 @@
+:root {
+  --reach-dialog: 1;
+  --input-background: red;
+  --input-label-font: var(--font-display);
+  --input-body-font: var(--font-body);
+  --input-border-radius: 4px;
+  --input-font-size: 16px;
+  --input-mm-font-size: 1.1em;
+}
+
+.el-text-input {
+  background: var(--input-background);
+}
+
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.33);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+[data-reach-dialog-content] {
+  width: 90vw;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  outline: none;
+}
+
+@media (min-width: 360px) {
+  [data-reach-dialog-content] {
+    width: 86vw;
+    margin: 10vh auto;
+    background: white;
+    padding: 2rem;
+    outline: none;
+  }
+}
+
+@media (min-width: 550px) {
+  [data-reach-dialog-content] {
+    max-width: 720px;
+    padding: 94px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0px;
+  border: 0px;
+}

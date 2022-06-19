@@ -109,21 +109,12 @@ async function formActionFunction({
   }
 
   // Add the form values to context
-  if (formType === "basic") {
-    await addFormValuesToContext({
-      formType,
-      formBlueprint,
-      body,
-      context,
-    });
-  } else {
-    await addFormValuesToContext({
-      formType,
-      formBlueprint,
-      body,
-      context,
-    });
-  }
+  await addFormValuesToContext({
+    formType,
+    formBlueprint,
+    body,
+    context,
+  });
 
   // Validate the form inputs using the validation
   // methods from the form structure

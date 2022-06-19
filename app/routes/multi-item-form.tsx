@@ -2,13 +2,15 @@ import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction,
+  LinksFunction,
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { multiItemStepForm } from "~/forms/multi-item-form";
 import { formActionFunction } from "~/services/electric-ladyland/action-function";
+import { FormField } from "~/services/electric-ladyland/form-field";
 import { MultipartForm } from "~/services/electric-ladyland/form-types";
-import { formLoaderFunction } from "~/services/electric-ladyland/loader-function";
+import { formLoaderFunction } from "~/services/electric-ladyland/loader";
 
 const metaTitle = "Multi-Item Form";
 const metaDescription = "TODO - Fill in description";
@@ -18,6 +20,15 @@ export let meta: MetaFunction = () => {
     title: metaTitle,
     description: metaDescription,
   };
+};
+
+export let links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: FormField.styles,
+    },
+  ];
 };
 
 export let loader: LoaderFunction = async ({ request }) => {

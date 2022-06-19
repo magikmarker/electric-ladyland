@@ -1,7 +1,7 @@
 import { redirect, json } from "@remix-run/node";
 import { convertSingleQuotes } from "~/services/electric-ladyland/shared";
 import { commitSession } from "~/services/electric-ladyland/session.server";
-import { FormFieldInput, MultiStepForm } from "./types";
+import type { FormFieldInput, MultiStepForm } from "./types";
 
 // A bot entered a value into a hidden field
 function honeypotFieldHasValue({ body }: { body: FormData }) {
@@ -117,6 +117,7 @@ function addFormValuesToContext({
         // console.log({ contextAfterDelete: context });
 
         addFieldToContext(checkbox);
+        console.log("hi neighbors");
       });
     }
   }

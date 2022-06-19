@@ -73,7 +73,7 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
   });
 }
 
-// route:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/root.tsx
+// route:/Users/markjensen/shared/electric-ladyland/app/root.tsx
 var root_exports = {};
 __export(root_exports, {
   default: () => App,
@@ -98,30 +98,122 @@ function App() {
   }, /* @__PURE__ */ React.createElement(import_react2.Outlet, null), /* @__PURE__ */ React.createElement(import_react2.ScrollRestoration, null), /* @__PURE__ */ React.createElement(import_react2.Scripts, null), /* @__PURE__ */ React.createElement(import_react2.LiveReload, null)));
 }
 
-// route:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx
+// route:/Users/markjensen/shared/electric-ladyland/app/routes/multi-item-form.tsx
 var multi_item_form_exports = {};
 __export(multi_item_form_exports, {
   action: () => action,
   default: () => MultiItemForm,
+  links: () => links,
   loader: () => loader,
   meta: () => meta2
 });
 var import_node5 = require("@remix-run/node");
-var import_react6 = require("@remix-run/react");
+var import_react8 = require("@remix-run/react");
 
 // app/forms/multi-item-form.ts
 var notImportantStep = {
   fields: [
     {
       name: "not-important",
-      label: "Not Important",
+      label: "Text Input",
       type: "text",
+      description: "Short (less than 30 characters) description of todo item",
       required: true,
       initialValue: "Anything here",
       validation: {
-        patterns: ["^[\\w\\s-&']{2,50}$"],
+        formInputPattern: "^[\\w\\s\\-\\.&']{2,50}$",
+        formInputMessage: "letters, spaces, & or '",
+        patterns: ["^[\\w\\s\\-\\.&']{2,50}$"],
         messages: ["letters, spaces, & or '"]
       }
+    },
+    {
+      name: "checkbox-test-group",
+      type: "checkbox-group",
+      label: "Test Checkbox Group",
+      checkboxes: [
+        {
+          type: "checkbox",
+          name: "checkbox-one",
+          label: "Option One",
+          value: "option-one"
+        },
+        {
+          type: "checkbox",
+          name: "checkbox-two",
+          label: "Option Two",
+          value: "option-two"
+        },
+        {
+          type: "checkbox",
+          name: "checkbox-three",
+          label: "Option Three",
+          value: "option-three"
+        }
+      ]
+    },
+    {
+      name: "is-commercial-client",
+      label: "Commercial Client?",
+      type: "stateful-radio",
+      options: ["no", "yes", "maybe"],
+      initialValue: "no",
+      dependentChildren: [
+        [void 0],
+        [
+          {
+            name: "business-name",
+            label: "Business Name",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"]
+            }
+          },
+          {
+            name: "business-address",
+            label: "Business Address",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"]
+            }
+          }
+        ],
+        [
+          {
+            name: "business-name",
+            label: "Business Name",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"]
+            }
+          },
+          {
+            name: "business-address",
+            label: "Business Address",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"]
+            }
+          }
+        ]
+      ]
+    },
+    {
+      name: "testy-test",
+      type: "hidden",
+      initialValue: "dags"
     }
   ],
   nextButtonText: "Todo List"
@@ -202,10 +294,10 @@ var multiItemStepForm = [
   lessImportantStep
 ];
 
-// app/services/form/action-utils.ts
+// app/services/electric-ladyland/action-utils.ts
 var import_node2 = require("@remix-run/node");
 
-// app/services/form/shared.ts
+// app/services/electric-ladyland/shared.ts
 function getFormStage({
   context,
   formBlueprint
@@ -228,7 +320,7 @@ function convertSingleQuotes(string) {
   return result;
 }
 
-// app/services/form/session.server.ts
+// app/services/electric-ladyland/session.server.ts
 var import_node = require("@remix-run/node");
 var { getSession, commitSession, destroySession } = (0, import_node.createCookieSessionStorage)({
   cookie: {
@@ -242,7 +334,7 @@ var { getSession, commitSession, destroySession } = (0, import_node.createCookie
   }
 });
 
-// app/services/form/action-utils.ts
+// app/services/electric-ladyland/action-utils.ts
 function honeypotFieldHasValue({ body }) {
   let honeypotField = body.get("given-name");
   if (honeypotField) {
@@ -299,6 +391,7 @@ function addFormValuesToContext({
       field.checkboxes.forEach((checkbox) => {
         delete context[`${checkbox.name}`];
         addFieldToContext2(checkbox);
+        console.log("hi neighbors");
       });
     }
   }
@@ -479,7 +572,7 @@ async function handleListItemFormStructureOp({
   });
 }
 
-// app/services/form/action-function.ts
+// app/services/electric-ladyland/action-function.ts
 var import_node3 = require("@remix-run/node");
 async function formActionFunction({
   formType,
@@ -601,14 +694,90 @@ async function formActionFunction({
   });
 }
 
-// app/services/form/form-types.tsx
-var import_react5 = require("@remix-run/react");
+// app/services/electric-ladyland/styles.css
+var styles_default = "/build/_assets/styles-AVGWHGU4.css";
 
-// app/services/form/form-field.tsx
+// app/services/electric-ladyland/components/hidden.tsx
+function HiddenField({
+  fieldContext,
+  fieldBlueprint
+}) {
+  let initialValue = fieldBlueprint.initialValue ?? "";
+  let value = (fieldContext == null ? void 0 : fieldContext.value) ?? initialValue;
+  return /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: fieldBlueprint.name,
+    value
+  });
+}
+
+// app/services/electric-ladyland/components/shared/display.tsx
+function FieldLabel({
+  className,
+  children
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("span", {
+    className: `el-form-field-label${className ? " " + className : ""}`
+  }, children));
+}
+function FieldDescription({ children }) {
+  if (children) {
+    return /* @__PURE__ */ React.createElement("p", {
+      className: "el-form-field-description"
+    }, children);
+  }
+  return null;
+}
+function displayFieldErrors({
+  fieldErrors,
+  fieldVisited
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, fieldErrors.length >= 1 && fieldVisited ? fieldErrors.map((fieldError) => {
+    console.log({ fieldError });
+    if (fieldErrors.length === 1) {
+      return /* @__PURE__ */ React.createElement("div", {
+        className: "el-field-error-text",
+        key: fieldError
+      }, fieldError);
+    } else {
+      return /* @__PURE__ */ React.createElement("div", {
+        className: "el-field-error-text",
+        key: fieldError
+      }, "- ", fieldError);
+    }
+  }) : null);
+}
+function displayFieldLabelDescriptionError({
+  fieldBlueprint,
+  fieldErrors,
+  fieldVisited
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("label", {
+    htmlFor: fieldBlueprint.name,
+    key: fieldBlueprint.name
+  }, /* @__PURE__ */ React.createElement(FieldLabel, null, fieldBlueprint.label)), /* @__PURE__ */ React.createElement(FieldDescription, null, fieldBlueprint.description), fieldErrors && fieldVisited ? displayFieldErrors({ fieldErrors, fieldVisited }) : null);
+}
+function RadioOrCheckboxWrapper({
+  className,
+  children
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: `el-radio-or-checkbox-wrapper${className ? " " + className : ""}`
+  }, children));
+}
+function RadioOrCheckboxLabel({
+  className,
+  children,
+  htmlFor
+}) {
+  return /* @__PURE__ */ React.createElement("label", {
+    htmlFor,
+    className: `el-radio-or-checkbox-label${className ? " " + className : ""}`
+  }, children);
+}
+
+// app/services/electric-ladyland/components/shared/logic.tsx
 var import_react3 = require("react");
-var import_dialog = require("@reach/dialog");
-var import_react4 = require("@remix-run/react");
-var import_fi = require("react-icons/fi");
 function createFieldLabel(fieldName) {
   let words = fieldName.split("-");
   for (let i = 0; i < words.length; i++) {
@@ -616,570 +785,485 @@ function createFieldLabel(fieldName) {
   }
   return words.join(" ");
 }
-function displayFieldErrors({
-  fieldErrors,
-  fieldVisited
+function onChange({
+  e,
+  fieldValidation,
+  setFieldErrors,
+  fieldErrors
 }) {
-  return /* @__PURE__ */ React.createElement("div", {
-    className: "mb-1"
-  }, fieldErrors.length >= 1 && fieldVisited ? fieldErrors.map((fieldError) => {
-    return /* @__PURE__ */ React.createElement("div", {
-      className: "text-danger-6 font-medium mm:text-lg",
-      key: fieldError
-    }, fieldError);
-  }) : null);
+  fieldValidation.patterns.forEach(async (pattern, index) => {
+    var _a;
+    let regexTestPattern = new RegExp(pattern, "gim");
+    let value = convertSingleQuotes((_a = e == null ? void 0 : e.currentTarget) == null ? void 0 : _a.value);
+    let fieldIsValid = regexTestPattern.test(value);
+    if (fieldIsValid) {
+      setFieldErrors([]);
+    } else if (!fieldErrors.includes(fieldValidation.messages[index])) {
+      setFieldErrors([...fieldErrors, fieldValidation.messages[index]]);
+    }
+  });
 }
-function FormField({
-  field,
-  context
+function useFormField({
+  fieldBlueprint,
+  fieldContext
 }) {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
   let errors = [];
   let visited = false;
-  if (field.type === "email" || field.type === "password" || field.type === "text" || field.type === "textarea") {
-    if ((_a = context[`${field.name}`]) == null ? void 0 : _a.errors) {
-      errors = (_b = context[`${field.name}`]) == null ? void 0 : _b.errors;
-      if (((_c = context[`${field.name}`]) == null ? void 0 : _c.errors.length) >= 1)
+  if (fieldBlueprint.type === "email" || fieldBlueprint.type === "password" || fieldBlueprint.type === "text" || fieldBlueprint.type === "textarea") {
+    if (fieldContext == null ? void 0 : fieldContext.errors) {
+      errors = fieldContext == null ? void 0 : fieldContext.errors;
+      if ((fieldContext == null ? void 0 : fieldContext.errors.length) >= 1)
         visited = true;
     }
   }
   let [fieldErrors, setFieldErrors] = (0, import_react3.useState)(errors);
   let [fieldVisited, setFieldVisited] = (0, import_react3.useState)(visited);
-  function onChange(e) {
-    if (field.type === "text" || field.type === "textarea" || field.type === "email" || field.type === "password") {
-      field.validation.patterns.forEach(async (pattern, index) => {
-        let regexTestPattern = new RegExp(pattern, "gim");
-        let value = convertSingleQuotes(e.target.value);
-        let fieldIsValid = regexTestPattern.test(value);
-        if (fieldIsValid) {
-          setFieldErrors([]);
-        } else if (!fieldErrors.includes(field.validation.messages[index])) {
-          setFieldErrors([...fieldErrors, field.validation.messages[index]]);
-        }
+  let initialValue = fieldBlueprint.initialValue ?? "";
+  let defaultValue = (fieldContext == null ? void 0 : fieldContext.value) ?? initialValue;
+  return {
+    fieldErrors,
+    fieldVisited,
+    setFieldErrors,
+    setFieldVisited,
+    defaultValue
+  };
+}
+
+// app/services/electric-ladyland/components/text-input.tsx
+function TextInput({
+  fieldBlueprint,
+  fieldContext,
+  className
+}) {
+  let {
+    defaultValue,
+    fieldErrors,
+    setFieldErrors,
+    fieldVisited,
+    setFieldVisited
+  } = useFormField({ fieldBlueprint, fieldContext });
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, displayFieldLabelDescriptionError({
+    fieldBlueprint,
+    fieldErrors,
+    fieldVisited
+  }), fieldBlueprint.type === "text" || fieldBlueprint.type === "password" || fieldBlueprint.type === "email" ? /* @__PURE__ */ React.createElement("input", {
+    "data-test": fieldBlueprint.name,
+    name: fieldBlueprint.name,
+    id: fieldBlueprint.name,
+    className: `el-text-input${className ? " " + className : ""}`,
+    required: fieldBlueprint.required,
+    defaultValue,
+    placeholder: fieldBlueprint.placeholder,
+    onBlur: () => setFieldVisited(true),
+    onChange: (event) => {
+      onChange({
+        e: event,
+        setFieldErrors,
+        fieldErrors,
+        fieldValidation: fieldBlueprint.validation
+      });
+    },
+    pattern: fieldBlueprint.validation.formInputPattern,
+    title: fieldBlueprint.validation.formInputMessage,
+    type: fieldBlueprint.type,
+    autoCorrect: "false",
+    autoComplete: "false"
+  }) : fieldBlueprint.type === "textarea" ? /* @__PURE__ */ React.createElement("textarea", {
+    name: fieldBlueprint.name,
+    id: fieldBlueprint.name,
+    "data-test": fieldBlueprint.name,
+    className: "w-full font-medium mm:text-lg p-2 px-3 bg-white rounded",
+    required: fieldBlueprint.required,
+    rows: 5,
+    defaultValue,
+    placeholder: fieldBlueprint.placeholder,
+    onBlur: () => setFieldVisited(true),
+    onChange: (event) => {
+      onChange({
+        e: event,
+        setFieldErrors,
+        fieldErrors,
+        fieldValidation: fieldBlueprint.validation
       });
     }
-  }
-  if (field.type === "hidden") {
-    let value = field.initialValue;
-    if (context[`${field.name}`]) {
-      value = (_d = context[`${field.name}`]) == null ? void 0 : _d.value;
-    }
-    return /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: field.name,
-      value
-    });
-  }
-  if (field.type === "text") {
-    let defaultValue = field.initialValue;
-    if (context[`${field.name}`]) {
-      defaultValue = (_e = context[`${field.name}`]) == null ? void 0 : _e.value;
-    }
-    return /* @__PURE__ */ React.createElement("label", {
-      className: "block mb-12",
-      key: field.name
-    }, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), displayFieldErrors({ fieldErrors, fieldVisited }), /* @__PURE__ */ React.createElement(InputField, {
-      dataTest: field.name,
-      required: field.required,
-      name: field.name,
-      defaultValue,
-      placeholder: field.placeholder,
-      onBlur: () => setFieldVisited(true),
-      onChange,
-      pattern: field.validation.formInputPattern,
-      title: field.validation.formInputMessage,
-      type: field.type
-    }));
-  }
-  if (field.type === "password") {
-    let value = field.initialValue;
-    if (context[`${field.name}`]) {
-      value = (_f = context[`${field.name}`]) == null ? void 0 : _f.value;
-    }
-    return /* @__PURE__ */ React.createElement("label", {
-      className: "mb-6 block",
-      key: field.name
-    }, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), displayFieldErrors({ fieldErrors, fieldVisited }), /* @__PURE__ */ React.createElement(InputField, {
-      dataTest: field.name,
-      required: field.required,
-      name: field.name,
-      defaultValue: value,
-      onBlur: () => setFieldVisited(true),
-      onChange,
-      pattern: field.validation.formInputPattern,
-      title: field.validation.formInputMessage,
-      type: "password"
-    }));
-  }
-  if (field.type === "email") {
-    let defaultValue = field.initialValue;
-    if (context[`${field.name}`]) {
-      defaultValue = (_g = context[`${field.name}`]) == null ? void 0 : _g.value;
-    }
-    return /* @__PURE__ */ React.createElement("label", {
-      className: "mb-4",
-      key: field.name
-    }, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), displayFieldErrors({ fieldErrors, fieldVisited }), /* @__PURE__ */ React.createElement(InputField, {
-      dataTest: field.name,
-      required: field.required,
-      name: field.name,
-      defaultValue,
-      placeholder: field.placeholder,
-      onBlur: () => setFieldVisited(true),
-      onChange,
-      pattern: field.validation.formInputPattern,
-      title: field.validation.formInputMessage,
-      type: field.type
-    }));
-  }
-  if (field.type === "textarea") {
-    let defaultValue = field.initialValue;
-    if (context[field.name]) {
-      defaultValue = (_h = context[field.name]) == null ? void 0 : _h.value;
-    }
-    return /* @__PURE__ */ React.createElement("label", {
-      className: "mb-4",
-      key: field.name
-    }, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), displayFieldErrors({ fieldErrors, fieldVisited }), /* @__PURE__ */ React.createElement("textarea", {
-      "data-test": field.name,
-      className: "w-full font-medium mm:text-lg p-2 px-3 bg-white rounded",
-      required: field.required,
-      rows: 5,
-      name: field.name,
-      defaultValue,
-      placeholder: field.placeholder,
-      onBlur: () => setFieldVisited(true),
-      onChange
-    }), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-10"
-    }));
-  }
-  if (field.type === "radio") {
-    console.log({ context });
-    return /* @__PURE__ */ React.createElement(FieldItemWrapper, null, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), field.options.map((radioValue) => {
-      var _a2;
-      console.log({ radioValue });
-      let defaultRadioValue = field.initialValue;
-      if (context[field.name]) {
-        defaultRadioValue = (_a2 = context[field.name]) == null ? void 0 : _a2.value;
-      }
-      const label = createFieldLabel(radioValue);
-      return /* @__PURE__ */ React.createElement(RadioItem, {
-        key: `${field.name}-${radioValue}`
-      }, /* @__PURE__ */ React.createElement("input", {
-        "data-test": `${field.name}-${radioValue}`,
-        key: radioValue,
-        type: "radio",
-        id: `${field.name}-${radioValue}`,
-        name: field.name,
-        value: radioValue,
-        autoComplete: "off",
-        defaultChecked: radioValue === defaultRadioValue
-      }), /* @__PURE__ */ React.createElement(RadioLabel, {
-        className: "ml-2\n              ",
-        htmlFor: `${field.name}-${radioValue}`
-      }, label));
-    }));
-  }
-  if (field.type === "checkbox-group") {
-    return /* @__PURE__ */ React.createElement(FieldItemWrapper, null, /* @__PURE__ */ React.createElement(FieldLabel, null, field.groupLabel), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), field.checkboxes.map((checkbox) => {
-      return /* @__PURE__ */ React.createElement(RadioItem, {
-        key: checkbox.name
-      }, /* @__PURE__ */ React.createElement("input", {
-        "data-test": `${checkbox.name}-${checkbox.value}`,
-        key: checkbox.name,
-        type: "checkbox",
-        id: checkbox.name,
-        name: checkbox.name,
-        value: checkbox.value,
-        autoComplete: "off",
-        defaultChecked: context[checkbox.name]
-      }), /* @__PURE__ */ React.createElement(RadioLabel, {
-        className: "ml-2\n              ",
-        htmlFor: checkbox.name
-      }, checkbox.label));
-    }), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-4"
-    }));
-  }
-  if (field.type === "expandable-list") {
-    const { ExpandableList } = useExpandableList({
-      field
-    });
-    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(FieldItemWrapper, null, /* @__PURE__ */ React.createElement("div", {
-      className: "expandable-list-label"
-    }, field.listLabel), (field == null ? void 0 : field.listDescription) && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("span", {
-      className: "block h-2"
-    }), /* @__PURE__ */ React.createElement(FieldDescription, null, field.listDescription)), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-8"
-    }), /* @__PURE__ */ React.createElement(ExpandableList, {
-      context
-    })));
-  }
-  if (field.type === "stateful-radio") {
-    const { StatefulRadio, selectedValue } = useStatefulRadio({
-      field,
-      context
-    });
-    return /* @__PURE__ */ React.createElement(FieldItemWrapper, null, /* @__PURE__ */ React.createElement(StatefulRadio, {
-      key: field.name
-    }), selectedValue === 0 ? field.dependentChildren[0].map((nestedField) => {
-      if (nestedField) {
-        return /* @__PURE__ */ React.createElement(FormField, {
-          context,
-          key: nestedField.name,
-          field: nestedField
-        });
-      }
-      return null;
-    }) : selectedValue === 1 ? field.dependentChildren[1].map((nestedField) => {
-      if (nestedField) {
-        return /* @__PURE__ */ React.createElement(FormField, {
-          context,
-          key: nestedField.name,
-          field: nestedField
-        });
-      }
-      return null;
-    }) : selectedValue === 2 ? field.dependentChildren[2].map((nestedField) => {
-      if (nestedField) {
-        return /* @__PURE__ */ React.createElement(FormField, {
-          context,
-          key: nestedField.name,
-          field: nestedField
-        });
-      }
-      return null;
-    }) : selectedValue === 3 ? field.dependentChildren[3].map((nestedField) => {
-      if (nestedField) {
-        return /* @__PURE__ */ React.createElement(FormField, {
-          context,
-          key: nestedField.name,
-          field: nestedField
-        });
-      }
-      return null;
-    }) : []);
-  }
-  return null;
+  }) : null);
 }
-function useExpandableList({ field }) {
+
+// app/services/electric-ladyland/components/radio.tsx
+function Radio({
+  fieldBlueprint,
+  fieldContext
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, displayFieldLabelDescriptionError({
+    fieldBlueprint
+  }), fieldBlueprint.options.map((radioValue) => {
+    console.log({ radioValue });
+    let defaultRadioValue = fieldBlueprint.initialValue;
+    if (fieldContext == null ? void 0 : fieldContext.value) {
+      defaultRadioValue = fieldContext.value;
+    }
+    const label = createFieldLabel(radioValue);
+    return /* @__PURE__ */ React.createElement(RadioOrCheckboxWrapper, {
+      key: `${fieldBlueprint.name}-${radioValue}`
+    }, /* @__PURE__ */ React.createElement("input", {
+      "data-test": `${fieldBlueprint.name}-${radioValue}`,
+      key: radioValue,
+      type: "radio",
+      id: `${fieldBlueprint.name}-${radioValue}`,
+      name: fieldBlueprint.name,
+      value: radioValue,
+      autoComplete: "off",
+      defaultChecked: radioValue === defaultRadioValue
+    }), /* @__PURE__ */ React.createElement(RadioOrCheckboxLabel, {
+      className: "ml-2\n              ",
+      htmlFor: `${fieldBlueprint.name}-${radioValue}`
+    }, label));
+  }));
+}
+
+// app/services/electric-ladyland/components/checkbox-group.tsx
+function CheckboxGroup({
+  fieldBlueprint,
+  context
+}) {
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, displayFieldLabelDescriptionError({
+    fieldBlueprint
+  }), fieldBlueprint.checkboxes.map((checkbox) => {
+    return /* @__PURE__ */ React.createElement(RadioOrCheckboxWrapper, {
+      key: checkbox.name
+    }, /* @__PURE__ */ React.createElement("input", {
+      "data-test": `${checkbox.name}-${checkbox.value}`,
+      key: checkbox.name,
+      type: "checkbox",
+      id: checkbox.name,
+      name: checkbox.name,
+      value: checkbox.value,
+      autoComplete: "off",
+      defaultChecked: context == null ? void 0 : context[checkbox.name]
+    }), /* @__PURE__ */ React.createElement(RadioOrCheckboxLabel, {
+      className: "ml-2\n              ",
+      htmlFor: checkbox.name
+    }, checkbox.label));
+  }));
+}
+
+// app/services/electric-ladyland/components/expandable-list.tsx
+var import_react4 = require("@remix-run/react");
+var import_react5 = require("react");
+var import_dialog = require("@reach/dialog");
+var import_fi = require("react-icons/fi");
+function ExpandableList({
+  fieldBlueprint,
+  fieldContext
+}) {
   const submit = (0, import_react4.useSubmit)();
-  const [showDialog, setShowDialog] = (0, import_react3.useState)(false);
-  const [selectedIndex, setSelectedIndex] = (0, import_react3.useState)(void 0);
-  const [selectedAction, setSelectedAction] = (0, import_react3.useState)("");
-  const [listItems, setListItems] = (0, import_react3.useState)([]);
+  const [showDialog, setShowDialog] = (0, import_react5.useState)(false);
+  const [selectedIndex, setSelectedIndex] = (0, import_react5.useState)(void 0);
+  const [selectedAction, setSelectedAction] = (0, import_react5.useState)("");
+  const [listItems, setListItems] = (0, import_react5.useState)([]);
   const open = () => setShowDialog(true);
   const close = () => setShowDialog(false);
-  console.log({ field });
-  let { listItemStructure } = field;
-  function ExpandableList({ context }) {
-    console.log({ context, fieldName: field.name });
-    (0, import_react3.useEffect)(() => {
+  (0, import_react5.useEffect)(() => {
+    console.log("context changed");
+    setListItems(fieldContext == null ? void 0 : fieldContext.value);
+    console.log({ listItems });
+  }, [fieldContext, listItems]);
+  let { listItemStructure } = fieldBlueprint;
+  let fieldsToShowInTable = {};
+  listItemStructure.forEach((field) => {
+    if (field.showOnMobileTable) {
+      fieldsToShowInTable[field.name] = field;
+    }
+  });
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("button", {
+    className: "add-item-button expand-click-target",
+    onClick: (e) => {
+      e.preventDefault();
+      setSelectedIndex(void 0);
+      setSelectedAction("");
+      open();
+    }
+  }, /* @__PURE__ */ React.createElement("span", {
+    className: "add-item-icon"
+  }, /* @__PURE__ */ React.createElement(import_fi.FiPlusCircle, null)), fieldBlueprint.addItemLabel), /* @__PURE__ */ React.createElement("span", {
+    className: "block h-5 mm:h-6"
+  }), listItems.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: "list-items-table-wrapper"
+  }, /* @__PURE__ */ React.createElement("table", null, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", {
+    className: "lit-row"
+  }, listItemStructure.map((nestedField) => {
+    if (Object.keys(fieldsToShowInTable).includes(nestedField.name)) {
+      return /* @__PURE__ */ React.createElement("th", {
+        className: "lit-cell",
+        "data-flex": nestedField.tableFlex,
+        "data-align-text": nestedField.alignText,
+        key: nestedField.name
+      }, nestedField.label);
+    } else {
+      return null;
+    }
+  }), /* @__PURE__ */ React.createElement("th", {
+    className: "lit-cell",
+    "data-flex": 3
+  }, "\xA0"), /* @__PURE__ */ React.createElement("th", {
+    className: "lit-cell",
+    "data-flex": 3
+  }, "\xA0"))), listItems.map((item, index) => {
+    return /* @__PURE__ */ React.createElement("tr", {
+      className: "lit-row",
+      key: index
+    }, Object.keys(fieldsToShowInTable).map((fieldToShow, index2) => {
       var _a;
-      console.log("context changed");
-      setListItems((_a = context[field.name]) == null ? void 0 : _a.value);
-      console.log({ listItems });
-    }, [context]);
-    let fieldsToShowInTable = {};
-    listItemStructure.map((field2) => {
-      if (field2.showOnMobileTable) {
-        fieldsToShowInTable[field2.name] = field2;
-      }
-    });
-    return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("button", {
-      className: "add-item-button expand-click-target",
-      onClick: () => {
-        setSelectedIndex(void 0);
-        setSelectedAction("");
-        open();
-      }
-    }, /* @__PURE__ */ React.createElement("span", {
-      className: "add-item-icon"
-    }, /* @__PURE__ */ React.createElement(import_fi.FiPlusCircle, null)), field.addItemLabel), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-5 mm:h-6"
-    }), listItems.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-      className: "list-items-table-wrapper"
-    }, /* @__PURE__ */ React.createElement("table", null, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", {
-      className: "lit-row"
-    }, listItemStructure.map((nestedField) => {
-      if (Object.keys(fieldsToShowInTable).includes(nestedField.name)) {
-        return /* @__PURE__ */ React.createElement("th", {
-          className: "lit-cell",
-          "data-flex": nestedField.tableFlex,
-          "data-align-text": nestedField.alignText,
-          key: nestedField.name
-        }, nestedField.label);
-      }
+      console.log({ index: index2 });
+      let cellFlexValue;
+      let alignTextValue;
+      listItemStructure.forEach((itemStructure) => {
+        if (itemStructure.name === fieldToShow) {
+          cellFlexValue = itemStructure.tableFlex;
+          alignTextValue = itemStructure.alignText;
+        }
+      });
+      console.log({ cellFlexValue });
+      return /* @__PURE__ */ React.createElement("th", {
+        className: "lit-cell",
+        "data-flex": cellFlexValue,
+        "data-align-text": alignTextValue,
+        key: `${item[fieldToShow]}-${index2}`
+      }, (_a = item[fieldToShow]) == null ? void 0 : _a.value);
     }), /* @__PURE__ */ React.createElement("th", {
       className: "lit-cell",
+      "data-align-text": "right",
       "data-flex": 3
-    }, "\xA0"), /* @__PURE__ */ React.createElement("th", {
-      className: "lit-cell",
-      "data-flex": 3
-    }, "\xA0"))), listItems.map((item, index) => {
-      return /* @__PURE__ */ React.createElement("tr", {
-        className: "lit-row",
-        key: index
-      }, Object.keys(fieldsToShowInTable).map((fieldToShow, index2) => {
-        var _a, _b;
-        console.log({ index: index2 });
-        console.log("data-flex: ", (_a = listItemStructure[index2]) == null ? void 0 : _a.tableFlex);
-        let cellFlexValue;
-        let alignTextValue;
-        listItemStructure.forEach((itemStructure) => {
-          if (itemStructure.name === fieldToShow) {
-            cellFlexValue = itemStructure.tableFlex;
-            alignTextValue = itemStructure.alignText;
-          }
-        });
-        console.log({ cellFlexValue });
-        return /* @__PURE__ */ React.createElement("th", {
-          className: "lit-cell",
-          "data-flex": cellFlexValue,
-          "data-align-text": alignTextValue,
-          key: `${item[fieldToShow]}-${index2}`
-        }, (_b = item[fieldToShow]) == null ? void 0 : _b.value);
-      }), /* @__PURE__ */ React.createElement("th", {
-        className: "lit-cell",
-        "data-align-text": "right",
-        "data-flex": 3
-      }, /* @__PURE__ */ React.createElement("button", {
-        className: "edit-item-button expand-click-target",
-        "data-test": `edit-${index}`,
-        onClick: () => {
-          setSelectedIndex(index);
-          setSelectedAction("edit-item");
-          open();
-        }
-      }, "Edit")), /* @__PURE__ */ React.createElement("th", {
-        className: "lit-cell",
-        "data-align-text": "right",
-        "data-flex": 3
-      }, /* @__PURE__ */ React.createElement("button", {
-        className: "delete-item-button expand-click-target",
-        "data-test": `delete-${index}`,
-        onClick: () => {
-          setSelectedIndex(index);
-          setSelectedAction("delete-item");
-          open();
-        }
-      }, "Delete")));
-    })))), /* @__PURE__ */ React.createElement(import_dialog.DialogOverlay, {
-      isOpen: showDialog,
-      onDismiss: close
-    }, /* @__PURE__ */ React.createElement(import_dialog.DialogContent, {
-      "aria-label": field.addOrEditItemModalLabel
-    }, selectedAction === "delete-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-      className: "font-bold text-2xl text-danger-7"
-    }, "Delete Item"), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-3"
-    }), /* @__PURE__ */ React.createElement("p", null, "Are you sure you want to delete item", " ", listItems.map((item, index) => {
-      var _a;
-      if (index === selectedIndex) {
-        console.log({ item: item[Object.keys(item)[0]] });
-        return (_a = listItems[selectedIndex][Object.keys(listItems[selectedIndex])[0]]) == null ? void 0 : _a.value;
-      }
-    })), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-6"
-    }), /* @__PURE__ */ React.createElement("div", {
-      className: "flex items-center"
     }, /* @__PURE__ */ React.createElement("button", {
-      className: "bg-primary-05 text-primary-7 font-bold py-2 px-4 rounded-md mr-8 border-none expand-click-target",
-      "data-test": "cancel",
-      onClick: () => {
-        close();
+      className: "edit-item-button expand-click-target",
+      "data-test": `edit-${index}`,
+      onClick: (e) => {
+        e.preventDefault();
+        setSelectedIndex(index);
+        setSelectedAction("edit-item");
+        open();
       }
-    }, "Cancel"), /* @__PURE__ */ React.createElement(import_react4.Form, {
-      method: "post",
-      onSubmitCapture: (event) => {
-        submit(event.currentTarget);
-        close();
+    }, "Edit")), /* @__PURE__ */ React.createElement("th", {
+      className: "lit-cell",
+      "data-align-text": "right",
+      "data-flex": 3
+    }, /* @__PURE__ */ React.createElement("button", {
+      className: "delete-item-button expand-click-target",
+      "data-test": `delete-${index}`,
+      onClick: (e) => {
+        e.preventDefault();
+        setSelectedIndex(index);
+        setSelectedAction("delete-item");
+        open();
       }
-    }, /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: "operation-type",
-      value: "delete-list-item"
-    }), /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: "index-to-delete",
-      value: selectedIndex
-    }), /* @__PURE__ */ React.createElement("button", {
-      className: "bg-danger-05 text-danger-9 font-bold outline-none py-2 px-4 rounded-md",
-      "data-test": "confirm-delete",
-      type: "submit"
-    }, "Confirm Delete")))) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-      className: "font-bold text-neutral-9 text-2xl"
-    }, typeof selectedIndex === "number" ? field.editItemLabel : field.addItemLabel), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-8"
-    }), /* @__PURE__ */ React.createElement(import_react4.Form, {
-      reloadDocument: true,
-      method: "post",
-      onSubmitCapture: (event) => {
-        submit(event.currentTarget);
-        close();
-      }
-    }, selectedAction === "edit-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: "operation-type",
-      value: "edit-list-item"
-    }), /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: "index-to-change",
-      value: selectedIndex
-    })) : /* @__PURE__ */ React.createElement("input", {
-      type: "hidden",
-      name: "operation-type",
-      value: "add-item-to-list"
-    }), listItemStructure.map((nestedField) => {
-      var _a;
-      return /* @__PURE__ */ React.createElement(FormField, {
-        context: typeof selectedIndex === "number" ? (_a = context[field.name]) == null ? void 0 : _a.value[selectedIndex] : context,
-        key: nestedField.name,
-        field: nestedField
-      });
-    }), /* @__PURE__ */ React.createElement("span", {
-      className: "block h-4"
-    }), /* @__PURE__ */ React.createElement("button", {
-      className: "text-success-7 font-bold rounded-md border-none text-lg px-4 py-2 -ml-1 bg-success-05",
-      type: "submit"
-    }, "Confirm"))))));
-  }
-  return { ExpandableList };
+    }, "Delete")));
+  })))), /* @__PURE__ */ React.createElement(import_dialog.DialogOverlay, {
+    isOpen: showDialog,
+    onDismiss: close
+  }, /* @__PURE__ */ React.createElement(import_dialog.DialogContent, {
+    "aria-label": fieldBlueprint.addOrEditItemModalLabel
+  }, selectedAction === "delete-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: "font-bold text-2xl text-danger-7"
+  }, "Delete Item"), /* @__PURE__ */ React.createElement("span", {
+    className: "block h-3"
+  }), /* @__PURE__ */ React.createElement("p", null, "Are you sure you want to delete item", " ", listItems.map((item, index) => {
+    var _a;
+    if (index === selectedIndex) {
+      console.log({ item: item[Object.keys(item)[0]] });
+      return (_a = listItems[selectedIndex][Object.keys(listItems[selectedIndex])[0]]) == null ? void 0 : _a.value;
+    } else {
+      return null;
+    }
+  })), /* @__PURE__ */ React.createElement("span", {
+    className: "block h-6"
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "flex items-center"
+  }, /* @__PURE__ */ React.createElement("button", {
+    className: "bg-primary-05 text-primary-7 font-bold py-2 px-4 rounded-md mr-8 border-none expand-click-target",
+    "data-test": "cancel",
+    onClick: () => {
+      close();
+    }
+  }, "Cancel"), /* @__PURE__ */ React.createElement(import_react4.Form, {
+    method: "post",
+    onSubmitCapture: (event) => {
+      submit(event.currentTarget);
+      close();
+    }
+  }, /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: "operation-type",
+    value: "delete-list-item"
+  }), /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: "index-to-delete",
+    value: selectedIndex
+  }), /* @__PURE__ */ React.createElement("button", {
+    className: "bg-danger-05 text-danger-9 font-bold outline-none py-2 px-4 rounded-md",
+    "data-test": "confirm-delete",
+    type: "submit"
+  }, "Confirm Delete")))) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: "font-bold text-neutral-9 text-2xl"
+  }, typeof selectedIndex === "number" ? fieldBlueprint.editItemLabel : fieldBlueprint.addItemLabel), /* @__PURE__ */ React.createElement("span", {
+    className: "block h-8"
+  }), /* @__PURE__ */ React.createElement(import_react4.Form, {
+    reloadDocument: true,
+    method: "post",
+    onSubmitCapture: (event) => {
+      submit(event.currentTarget);
+      close();
+    }
+  }, selectedAction === "edit-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: "operation-type",
+    value: "edit-list-item"
+  }), /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: "index-to-change",
+    value: selectedIndex
+  })) : /* @__PURE__ */ React.createElement("input", {
+    type: "hidden",
+    name: "operation-type",
+    value: "add-item-to-list"
+  }), listItemStructure.map((nestedField) => {
+    return /* @__PURE__ */ React.createElement(FormField, {
+      context: typeof selectedIndex === "number" ? fieldContext == null ? void 0 : fieldContext.value[selectedIndex] : fieldContext,
+      key: nestedField.name,
+      field: nestedField
+    });
+  }), /* @__PURE__ */ React.createElement("span", {
+    className: "block h-4"
+  }), /* @__PURE__ */ React.createElement("button", {
+    className: "text-success-7 font-bold rounded-md border-none text-lg px-4 py-2 -ml-1 bg-success-05",
+    type: "submit"
+  }, "Confirm"))))));
 }
-function useStatefulRadio({
-  field,
+
+// app/services/electric-ladyland/components/stateful-radio.tsx
+var import_react6 = require("react");
+function StatefulRadio({
+  fieldBlueprint,
   context
 }) {
   let selectedIndex = 0;
-  field.options.forEach((option, index) => {
-    let defaultValue = field.initialValue;
-    if (context[field.name]) {
-      defaultValue = context[`${field.name}`].value;
-    }
+  fieldBlueprint.options.forEach((option, index) => {
+    var _a;
+    let defaultValue = ((_a = context[fieldBlueprint.name]) == null ? void 0 : _a.value) ?? fieldBlueprint.initialValue;
     if (defaultValue === option) {
       selectedIndex = index;
     }
   });
-  const [selectedValue, setSelectedValue] = (0, import_react3.useState)(selectedIndex);
-  function StatefulRadio() {
-    return /* @__PURE__ */ React.createElement(FieldItemWrapper, null, /* @__PURE__ */ React.createElement(FieldLabel, null, field.label), /* @__PURE__ */ React.createElement(FieldDescription, null, field.description), field.options.map((radioValue, index) => {
-      const label = createFieldLabel(radioValue);
-      if (index === selectedValue) {
-        return /* @__PURE__ */ React.createElement(RadioItem, {
-          key: radioValue
-        }, /* @__PURE__ */ React.createElement("input", {
-          "data-test": `${field.name}-${radioValue}`,
-          type: "radio",
-          id: `${field.name}-${radioValue}`,
-          name: field.name,
-          value: radioValue,
-          onChange: () => {
-            setSelectedValue(index);
-          },
-          checked: true,
-          autoComplete: "off"
-        }), /* @__PURE__ */ React.createElement(RadioLabel, {
-          htmlFor: `${field.name}-${radioValue}`
-        }, label));
-      } else {
-        return /* @__PURE__ */ React.createElement(RadioItem, {
-          key: radioValue
-        }, /* @__PURE__ */ React.createElement("input", {
-          "data-test": `${field.name}-${radioValue}`,
-          type: "radio",
-          id: `${field.name}-${radioValue}`,
-          name: field.name,
-          value: radioValue,
-          onChange: () => {
-            setSelectedValue(index);
-          },
-          autoComplete: "off"
-        }), /* @__PURE__ */ React.createElement(RadioLabel, {
-          htmlFor: `${field.name}-${radioValue}`
-        }, label));
-      }
+  console.log({ context });
+  const [selectedValue, setSelectedValue] = (0, import_react6.useState)(selectedIndex);
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, displayFieldLabelDescriptionError({
+    fieldBlueprint
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "el-field-item"
+  }, fieldBlueprint.options.map((radioValue, index) => {
+    const label = createFieldLabel(radioValue);
+    if (index === selectedValue) {
+      return /* @__PURE__ */ React.createElement(RadioOrCheckboxWrapper, {
+        key: radioValue
+      }, /* @__PURE__ */ React.createElement("input", {
+        "data-test": `${fieldBlueprint.name}-${radioValue}`,
+        type: "radio",
+        id: `${fieldBlueprint.name}-${radioValue}`,
+        name: fieldBlueprint.name,
+        value: radioValue,
+        onChange: () => {
+          setSelectedValue(index);
+        },
+        checked: true,
+        autoComplete: "off"
+      }), /* @__PURE__ */ React.createElement(RadioOrCheckboxLabel, {
+        htmlFor: `${fieldBlueprint.name}-${radioValue}`
+      }, label));
+    } else {
+      return /* @__PURE__ */ React.createElement(RadioOrCheckboxWrapper, {
+        key: radioValue
+      }, /* @__PURE__ */ React.createElement("input", {
+        "data-test": `${fieldBlueprint.name}-${radioValue}`,
+        type: "radio",
+        id: `${fieldBlueprint.name}-${radioValue}`,
+        name: fieldBlueprint.name,
+        value: radioValue,
+        onChange: () => {
+          setSelectedValue(index);
+        },
+        autoComplete: "off"
+      }), /* @__PURE__ */ React.createElement(RadioOrCheckboxLabel, {
+        htmlFor: `${fieldBlueprint.name}-${radioValue}`
+      }, label));
+    }
+  })), fieldBlueprint.dependentChildren[selectedValue].map((nestedField) => {
+    if (nestedField) {
+      return /* @__PURE__ */ React.createElement(FormField, {
+        context,
+        key: nestedField.name,
+        field: nestedField
+      });
+    }
+    return null;
+  }));
+}
+
+// app/services/electric-ladyland/form-field.tsx
+FormField.styles = styles_default;
+function FormField({
+  field,
+  context
+}) {
+  if (field.type === "hidden") {
+    return /* @__PURE__ */ React.createElement(HiddenField, {
+      fieldContext: context[field.name],
+      fieldBlueprint: field
+    });
+  }
+  if (field.type === "text" || field.type === "textarea" || field.type === "password" || field.type === "email") {
+    return /* @__PURE__ */ React.createElement("div", {
+      className: "el-field-item"
+    }, /* @__PURE__ */ React.createElement(TextInput, {
+      fieldBlueprint: field,
+      fieldContext: context[field.name]
     }));
   }
-  return { StatefulRadio, selectedValue };
-}
-function FieldItemWrapper({
-  className,
-  children
-}) {
-  return /* @__PURE__ */ React.createElement("div", {
-    className: `mb-10${className ? " " + className : ""}`
-  }, children);
-}
-function FieldLabel({
-  className,
-  children
-}) {
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("span", {
-    className: `block font-display font-bold text-xl tb:text-xl text-neutral-6${className ? " " + className : ""}`
-  }, children), /* @__PURE__ */ React.createElement("span", {
-    className: "block h-1.5"
-  }));
-}
-function InputField({
-  className,
-  required,
-  name,
-  defaultValue,
-  placeholder,
-  onBlur,
-  onChange,
-  pattern,
-  title,
-  type,
-  dataTest
-}) {
-  return /* @__PURE__ */ React.createElement("input", {
-    "data-test": dataTest,
-    className: `bg-white  font-body font-medium rounded w-full text-base p-2 mm:text-xl${className ? " " + className : ""}`,
-    required,
-    name,
-    defaultValue,
-    placeholder,
-    onBlur,
-    onChange,
-    pattern,
-    title,
-    type,
-    autoCorrect: "false",
-    autoComplete: "false"
-  });
-}
-function RadioItem({
-  className,
-  children
-}) {
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-    className: `mb-1 mt-2 flex items-center${className ? " " + className : ""}`
-  }, children), /* @__PURE__ */ React.createElement("span", {
-    className: "block h-1"
-  }));
-}
-function RadioLabel({
-  className,
-  children,
-  htmlFor
-}) {
-  return /* @__PURE__ */ React.createElement("label", {
-    htmlFor,
-    className: `radio-label block ml-2 font-medium mm:text-lg mm:ml-3 text-neutral-8${className ? " " + className : ""}`
-  }, children);
-}
-function FieldDescription({ children }) {
-  if (children) {
-    return /* @__PURE__ */ React.createElement("p", {
-      className: "-mt-1 mb-4 mm:mb-3 text-neutral-6 font-light"
-    }, children);
+  if (field.type === "radio") {
+    return /* @__PURE__ */ React.createElement("div", {
+      className: "el-field-item"
+    }, /* @__PURE__ */ React.createElement(Radio, {
+      fieldBlueprint: field,
+      fieldContext: context[field.name]
+    }));
+  }
+  if (field.type === "checkbox-group") {
+    return /* @__PURE__ */ React.createElement("div", {
+      className: "el-field-item"
+    }, /* @__PURE__ */ React.createElement(CheckboxGroup, {
+      fieldBlueprint: field,
+      context
+    }));
+  }
+  if (field.type === "expandable-list") {
+    return /* @__PURE__ */ React.createElement("div", {
+      className: "el-field-item"
+    }, /* @__PURE__ */ React.createElement(ExpandableList, {
+      fieldBlueprint: field,
+      fieldContext: context[field.name]
+    }));
+  }
+  if (field.type === "stateful-radio") {
+    return /* @__PURE__ */ React.createElement("div", {
+      className: "el-field-item"
+    }, /* @__PURE__ */ React.createElement(StatefulRadio, {
+      fieldBlueprint: field,
+      context
+    }));
   }
   return null;
 }
 
-// app/services/form/form-types.tsx
+// app/services/electric-ladyland/form-types.tsx
+var import_react7 = require("@remix-run/react");
 var import_fa = require("react-icons/fa");
 function MultipartForm({
   context,
@@ -1225,7 +1309,7 @@ function MultipartForm({
     className: " ml-2 block mm:text-lg"
   }, /* @__PURE__ */ React.createElement(import_fa.FaChevronRight, {
     "aria-hidden": "true"
-  }))))), (context.formStage === "middle" || context.formStage === "end") && /* @__PURE__ */ React.createElement(import_react5.Form, {
+  }))))), (context.formStage === "middle" || context.formStage === "end") && /* @__PURE__ */ React.createElement(import_react7.Form, {
     method: "post"
   }, /* @__PURE__ */ React.createElement(FormButton, {
     dataTest: "back",
@@ -1245,14 +1329,14 @@ function FormWrapper({
   reloadDocument = false
 }) {
   if (reloadDocument) {
-    return /* @__PURE__ */ React.createElement(import_react5.Form, {
+    return /* @__PURE__ */ React.createElement(import_react7.Form, {
       reloadDocument: true,
       action: action2,
       className: "relative w-content",
       method: "post"
     }, children);
   }
-  return /* @__PURE__ */ React.createElement(import_react5.Form, {
+  return /* @__PURE__ */ React.createElement(import_react7.Form, {
     action: action2,
     className: "relative w-content",
     method: "post"
@@ -1286,33 +1370,88 @@ function FormButton({
   }, children);
 }
 
-// app/services/form/loader-function.ts
+// app/services/electric-ladyland/loader/index.ts
 var import_node4 = require("@remix-run/node");
 
-// app/services/form/loader-utils.ts
-function checkForFieldNameAndValue({
+// app/services/electric-ladyland/loader/logic/check-for-relevant-context.ts
+function checkForRelevantContext({
+  basicOrMultipart,
+  formBlueprint,
+  context
+}) {
+  if (!context) {
+    return {};
+  }
+  let contextMismatch = false;
+  if (basicOrMultipart === "multipart") {
+    for (const step of formBlueprint) {
+      for (const field of step == null ? void 0 : step.fields) {
+        if (contextMismatch) {
+          console.log("The context you passed in does not match the structure of the form. Setting context to an empty object so that we can start the form again");
+          return {};
+        }
+        contextMismatch = checkContextForMismatch({ field, context });
+      }
+    }
+  }
+  if (basicOrMultipart === "basic") {
+    for (const field of formBlueprint) {
+      if (contextMismatch) {
+        return {};
+      }
+      contextMismatch = checkContextForMismatch({ field, context });
+    }
+  }
+  return context;
+}
+function checkContextForMismatch({
   field,
   context
 }) {
+  if (field.type === "checkbox-group") {
+    return false;
+  }
   let contextFieldName = context[`${field.name}`];
-  if (contextFieldName) {
-    if (typeof (contextFieldName == null ? void 0 : contextFieldName.value) !== "string" && typeof (contextFieldName == null ? void 0 : contextFieldName.value) !== "object") {
-      console.log("bad value: ", contextFieldName.value);
-      return true;
-    }
-  } else {
+  if (typeof (contextFieldName == null ? void 0 : contextFieldName.value) !== "string" && typeof (contextFieldName == null ? void 0 : contextFieldName.value) !== "object") {
+    console.log("bad value: ", contextFieldName.value);
     return true;
   }
   if (field.type === "stateful-radio") {
     field.dependentChildren.forEach((fields) => {
       fields.forEach((nestedField) => {
         if (nestedField) {
-          checkForFieldNameAndValue({ field: nestedField, context });
+          checkContextForMismatch({ field: nestedField, context });
         }
       });
     });
   }
   return false;
+}
+
+// app/services/electric-ladyland/loader/logic/seed-context-with-initial-values.ts
+function seedContextWithInitialValues({
+  basicOrMultipart,
+  formBlueprint
+}) {
+  let context = {};
+  if (basicOrMultipart === "multipart") {
+    for (const step of formBlueprint) {
+      for (const field of step == null ? void 0 : step.fields) {
+        if (field) {
+          addFieldToContext({ field, context });
+        }
+      }
+    }
+    context.currentStep = 0;
+  }
+  if (basicOrMultipart === "basic") {
+    for (const nestedField of formBlueprint) {
+      if (typeof nestedField === "object") {
+        addFieldToContext({ field: nestedField, context });
+      }
+    }
+  }
+  return context;
 }
 function addFieldToContext({
   field,
@@ -1349,7 +1488,17 @@ function addFieldToContext({
   }
 }
 
-// app/services/form/loader-function.ts
+// app/services/electric-ladyland/loader/logic/get-form-stage.ts
+function getFormStage2({
+  context,
+  formBlueprint
+}) {
+  const numberOfAvailableSteps = formBlueprint.length;
+  let formStage = context.currentStep === 0 ? "beginning" : Number(context.currentStep) + 1 === numberOfAvailableSteps ? "end" : "middle";
+  return formStage;
+}
+
+// app/services/electric-ladyland/loader/index.ts
 async function formLoaderFunction({
   basicOrMultipart,
   request,
@@ -1358,18 +1507,38 @@ async function formLoaderFunction({
   var _a, _b, _c;
   const session = await getSession(request.headers.get("Cookie"));
   let context = session.get("context");
-  console.log("here's your context", context);
-  context = checkExistingContext({ formBlueprint, basicOrMultipart, context });
-  if (Object.keys(context).length < 1) {
-    context = seedContextWithInitialValues({ formBlueprint, basicOrMultipart });
+  if (basicOrMultipart === "basic") {
+    context = checkForRelevantContext({
+      formBlueprint,
+      basicOrMultipart,
+      context
+    });
+  } else {
+    context = checkForRelevantContext({
+      formBlueprint,
+      basicOrMultipart,
+      context
+    });
   }
-  console.log("here's your context now", context);
-  (context == null ? void 0 : context.currentStep) ?? 0;
+  if (Object.keys(context).length < 1) {
+    if (basicOrMultipart === "basic") {
+      context = seedContextWithInitialValues({
+        formBlueprint,
+        basicOrMultipart
+      });
+    } else {
+      context = seedContextWithInitialValues({
+        formBlueprint,
+        basicOrMultipart
+      });
+    }
+  }
+  context.currentStep = (context == null ? void 0 : context.currentStep) ?? 0;
   if (context.currentStep < 0) {
     context.currentStep = 0;
   }
   if (basicOrMultipart === "multipart") {
-    let formStage = getFormStage({ context, formBlueprint });
+    let formStage = getFormStage2({ context, formBlueprint });
     if (context.currentStep > 0 && Object.keys(context).length < 1) {
       console.log("You shouldn't be here");
       return (0, import_node4.json)({}, {
@@ -1384,84 +1553,23 @@ async function formLoaderFunction({
   }
   session.set("context", context);
   if (basicOrMultipart === "multipart") {
-    console.log({ currentStep: context == null ? void 0 : context.currentStep });
     return {
       context,
       currentStepBlueprint: (_c = formBlueprint[context.currentStep]) == null ? void 0 : _c.fields,
       commitSession,
-      session,
-      commitSessionFn: async () => {
-        await commitSession(session);
-      }
+      session
     };
   } else {
     return {
       context,
       currentStepBlueprint: formBlueprint,
       commitSession,
-      session,
-      commitSessionFn: async () => {
-        await commitSession(session);
-      }
+      session
     };
   }
 }
-function checkExistingContext({
-  basicOrMultipart,
-  formBlueprint,
-  context
-}) {
-  if (!context) {
-    return false;
-  }
-  let incorrectContext = false;
-  if (basicOrMultipart === "multipart") {
-    for (const step of formBlueprint) {
-      for (const field of step == null ? void 0 : step.fields) {
-        if (incorrectContext) {
-          console.log("haro!");
-          return {};
-        }
-        incorrectContext = checkForFieldNameAndValue({ field, context });
-      }
-    }
-  }
-  if (basicOrMultipart === "basic") {
-    for (const field of formBlueprint) {
-      if (incorrectContext) {
-        return {};
-      }
-      incorrectContext = checkForFieldNameAndValue({ field, context });
-    }
-  }
-  return context;
-}
-function seedContextWithInitialValues({
-  basicOrMultipart,
-  formBlueprint
-}) {
-  let context = {};
-  if (basicOrMultipart === "multipart") {
-    for (const step of formBlueprint) {
-      for (const field of step == null ? void 0 : step.fields) {
-        if (field) {
-          addFieldToContext({ field, context });
-        }
-      }
-    }
-    context.currentStep = 0;
-  }
-  if (basicOrMultipart === "basic") {
-    for (const nestedField of formBlueprint) {
-      if (typeof nestedField === "object") {
-        addFieldToContext({ field: nestedField, context });
-      }
-    }
-  }
-  return context;
-}
 
-// route:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/multi-item-form.tsx
+// route:/Users/markjensen/shared/electric-ladyland/app/routes/multi-item-form.tsx
 var metaTitle = "Multi-Item Form";
 var metaDescription = "TODO - Fill in description";
 var meta2 = () => {
@@ -1469,6 +1577,14 @@ var meta2 = () => {
     title: metaTitle,
     description: metaDescription
   };
+};
+var links = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: FormField.styles
+    }
+  ];
 };
 var loader = async ({ request }) => {
   const { currentStepBlueprint, context, commitSession: commitSession2, session } = await formLoaderFunction({
@@ -1498,7 +1614,7 @@ var action = async ({ request }) => {
   });
 };
 function MultiItemForm() {
-  let data = (0, import_react6.useLoaderData)();
+  let data = (0, import_react8.useLoaderData)();
   let context = data == null ? void 0 : data.context;
   let currentStepBlueprint = data == null ? void 0 : data.currentStepBlueprint;
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
@@ -1509,20 +1625,20 @@ function MultiItemForm() {
   })));
 }
 
-// route:/Users/markjensen/Code/jds-client-projects/2022/remixed-form/app/routes/index.tsx
+// route:/Users/markjensen/shared/electric-ladyland/app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
   default: () => Index
 });
-var import_react7 = require("@remix-run/react");
+var import_react9 = require("@remix-run/react");
 function Index() {
-  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", null, "Remixed Form"), /* @__PURE__ */ React.createElement("ul", null, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement(import_react7.Link, {
+  return /* @__PURE__ */ React.createElement("div", null, /* @__PURE__ */ React.createElement("h1", null, "Remixed Form"), /* @__PURE__ */ React.createElement("ul", null, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement(import_react9.Link, {
     to: "/multi-item-form"
   }, "Multi-Item Form"))));
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "41fb245c", "entry": { "module": "/build/entry.client-AQBZLN64.js", "imports": ["/build/_shared/chunk-D7CY57E5.js", "/build/_shared/chunk-VJIYMWKE.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-GANW7KTS.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-332IM6BK.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-4V4AIVVJ.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-41FB245C.js" };
+var assets_manifest_default = { "version": "b198a369", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-LLQKUGHL.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-B198A369.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };

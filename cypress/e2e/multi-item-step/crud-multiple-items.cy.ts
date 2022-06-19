@@ -5,8 +5,7 @@ describe("Muli-item Step - Multiple Bogeys", () => {
 it("Should be able to add/edit/delete multiple items", () => {
   cy.visit("http://localhost:3000/");
   cy.findByRole("link", { name: /Multi-Item Form/ }).click();
-  cy.findByText("Todo List").click();
-  cy.findByText("Not Important").click();
+  cy.findByText("Text Input").click();
   cy.findByText("Todo List").click();
   cy.findByText("Less Important").click();
   cy.findByText("Todo List").click();

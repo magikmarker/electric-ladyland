@@ -7,11 +7,15 @@ function checkForFieldNameAndValue({
   field: FormFieldInput;
   context: any;
 }) {
+  if (field.type === "checkbox-group") {
+    return false;
+  }
+
   let contextFieldName = context[`${field.name}`];
 
-  // console.log({ contextFieldName });
+  console.log({ contextFieldName, field, context });
 
-  if (contextFieldName) {
+  if (field.type !== "checkbox") {
     if (
       typeof contextFieldName?.value !== "string" &&
       typeof contextFieldName?.value !== "object"

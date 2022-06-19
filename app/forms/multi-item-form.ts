@@ -5,14 +5,105 @@ const notImportantStep: Step = {
   fields: [
     {
       name: "not-important",
-      label: "Not Important",
+      label: "Text Input",
       type: "text",
+      description: "Short (less than 30 characters) description of todo item",
       required: true,
       initialValue: "Anything here",
       validation: {
-        patterns: ["^[\\w\\s-&']{2,50}$"],
+        formInputPattern: "^[\\w\\s\\-\\.&']{2,50}$",
+        formInputMessage: "letters, spaces, & or '",
+        patterns: ["^[\\w\\s\\-\\.&']{2,50}$"],
         messages: ["letters, spaces, & or '"],
       },
+    },
+    {
+      name: "checkbox-test-group",
+      type: "checkbox-group",
+      label: "Test Checkbox Group",
+      checkboxes: [
+        {
+          type: "checkbox",
+          name: "checkbox-one",
+          label: "Option One",
+          value: "option-one",
+        },
+        {
+          type: "checkbox",
+          name: "checkbox-two",
+          label: "Option Two",
+          value: "option-two",
+        },
+        {
+          type: "checkbox",
+          name: "checkbox-three",
+          label: "Option Three",
+          value: "option-three",
+        },
+      ],
+    },
+    {
+      name: "is-commercial-client",
+      label: "Commercial Client?",
+      type: "stateful-radio",
+      options: ["no", "yes", "maybe"],
+      initialValue: "no",
+      dependentChildren: [
+        [undefined],
+        [
+          {
+            name: "business-name",
+            label: "Business Name",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"],
+            },
+          },
+          {
+            name: "business-address",
+            label: "Business Address",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"],
+            },
+          },
+        ],
+        [
+          {
+            name: "business-name",
+            label: "Business Name",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"],
+            },
+          },
+          {
+            name: "business-address",
+            label: "Business Address",
+            type: "text",
+            required: true,
+            initialValue: "",
+            validation: {
+              patterns: ["^[\\w\\s&']{2,50}$"],
+              messages: ["letters, spaces, & or '"],
+            },
+          },
+        ],
+      ],
+    },
+    {
+      name: "testy-test",
+      type: "hidden",
+      initialValue: "dags",
     },
   ],
   nextButtonText: "Todo List",
