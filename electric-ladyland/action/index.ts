@@ -235,4 +235,4 @@ async function formActionFunction({
   });
 }
 
-export { formActionFunction };
+exports.formActionFunction = formActionFunction;

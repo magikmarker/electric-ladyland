@@ -7,7 +7,7 @@ import {
   seedContextWithInitialValues,
 } from "./logic";
 
-export async function formLoaderFunction({
+async function formLoaderFunction({
   basicOrMultipart,
   request,
   formBlueprint,
@@ -113,3 +113,5 @@ export async function formLoaderFunction({
     };
   }
 }
+
+exports.formLoaderFunction = formLoaderFunction;

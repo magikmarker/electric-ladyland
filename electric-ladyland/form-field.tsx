@@ -9,9 +9,10 @@ import { StatefulRadio } from "./components/stateful-radio";
 
 FormField.styles = styles;
 
-export { FormField, styles as formFieldStyles };
+exports.formFieldStyles = styles;
+exports.formField = FormField;
 
-function FormField({
+export function FormField({
   field,
   context,
 }: {

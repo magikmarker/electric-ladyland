@@ -6,7 +6,7 @@ import { Button } from "~/components/interactive";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 
-export function MultipartForm({
+function MultipartForm({
   context,
   formStructure,
   action,
@@ -86,7 +86,7 @@ export function MultipartForm({
   );
 }
 
-export function BasicForm({
+function BasicForm({
   context,
   formStructure,
   action,
@@ -203,3 +203,6 @@ function FormButton({
     </button>
   );
 }
+
+exports.BasicForm = BasicForm;
+exports.MultipartForm = MultipartForm;
