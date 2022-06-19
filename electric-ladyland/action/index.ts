@@ -7,11 +7,7 @@ import {
   validateFormFieldValue,
 } from "./logic";
 import type { FormFieldInput, MultiStepForm } from "../types";
-import {
-  commitSession,
-  getSession,
-  destroySession,
-} from "electric-ladyland/session.server";
+import { commitSession, getSession, destroySession } from "../session.server";
 import { redirect } from "@remix-run/node";
 import { getFormStage } from "../shared";
 

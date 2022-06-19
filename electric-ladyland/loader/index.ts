@@ -1,9 +1,5 @@
 import type { FormFieldInput, MultiStepForm } from "electric-ladyland/types";
-import {
-  getSession,
-  commitSession,
-  destroySession,
-} from "electric-ladyland/session.server";
+import { getSession, commitSession, destroySession } from "../session.server";
 import { json } from "@remix-run/node";
 import {
   checkForRelevantContext,
