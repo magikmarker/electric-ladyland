@@ -183,7 +183,7 @@ const todoStep: Step = {
             messages: ["letters, spaces, & or '"],
           },
           showOnMobileTable: true,
-          tableFlex: 3,
+          tableFlex: 5,
           alignText: "left",
         },
         {
@@ -199,7 +199,7 @@ const todoStep: Step = {
             messages: ["letters, spaces, & or '"],
           },
           showOnMobileTable: true,
-          tableFlex: 3,
+          tableFlex: 6,
           alignText: "left",
         },
         {

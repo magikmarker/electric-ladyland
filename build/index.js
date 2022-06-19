@@ -289,7 +289,7 @@ var todoStep = {
             messages: ["letters, spaces, & or '"]
           },
           showOnMobileTable: true,
-          tableFlex: 3,
+          tableFlex: 5,
           alignText: "left"
         },
         {
@@ -304,7 +304,7 @@ var todoStep = {
             messages: ["letters, spaces, & or '"]
           },
           showOnMobileTable: true,
-          tableFlex: 3,
+          tableFlex: 6,
           alignText: "left"
         },
         {
@@ -764,7 +764,7 @@ async function formActionFunction({
 }
 
 // app/services/electric-ladyland/styles.css
-var styles_default = "/build/_assets/styles-CXELP24C.css";
+var styles_default = "/build/_assets/styles-TXZ7NQ7Z.css";
 
 // app/services/electric-ladyland/components/hidden.tsx
 function HiddenField({
@@ -1721,7 +1721,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "7b9e734a", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-PKBR7GIW.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-7B9E734A.js" };
+var assets_manifest_default = { "version": "a6f2751f", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-BIQLX3JP.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-A6F2751F.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };
