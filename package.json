@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/magikmarker/electric-ladyland"
   },
+  "type": "module",
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
