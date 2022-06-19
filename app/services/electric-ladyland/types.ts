@@ -56,8 +56,8 @@ export type CheckboxGroupBlueprint = {
 export type ExpandableListBlueprint = {
   type: "expandable-list";
   name: string;
-  listLabel?: string;
-  listDescription?: string;
+  label?: string;
+  description?: string;
   listItemStructure: FormBlueprint;
   initialValue: any[];
   addItemLabel: string;

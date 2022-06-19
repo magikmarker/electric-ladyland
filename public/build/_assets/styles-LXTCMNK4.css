@@ -1,0 +1,245 @@
+:root {
+  --reach-dialog: 1;
+  --input-field-bottom-margin: 32px;
+  --input-field-bottom-margin-mm: 42px;
+  --input-background: white;
+  --input-label-font: var(--font-display);
+  --input-body-font: var(--font-body);
+  --input-border-radius: 4px;
+  --input-font-size: 16px;
+  --input-font-size-mm: 1.05em;
+
+  --color-neutral-6: hsl(208 15% 33%);
+  --color-success-05: hsl(158 67% 95%);
+  --color-success-5: hsl(165 100% 32%);
+  --color-success-9: hsl(169 100% 13%);
+  --color-primary-5: hsl(197 100% 45%);
+  --color-danger-6: hsl(354 83% 45%);
+
+  --click-target: -8px;
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0px;
+  border: 0px;
+}
+
+.expand-click-target {
+  position: relative;
+}
+
+.expand-click-target::after {
+  content: "";
+  position: absolute;
+  top: var(--click-target);
+  bottom: var(--click-target);
+  left: var(--click-target);
+  right: var(--click-target);
+}
+
+.el-form-wrapper {
+  position: relative;
+  padding: 32px 16px;
+}
+
+@media (min-width: 360px) {
+  .el-form-wrapper {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 565px) {
+  .el-form-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+.el-form-button {
+  font-family: var(--input-label-font);
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--input-border-radius);
+  border: 0;
+  padding: 14px;
+  font-weight: 600;
+  color: white;
+  transform: scale(1);
+  transition: transform 400ms;
+}
+
+@media (min-width: 360px) {
+  .el-form-button {
+  }
+}
+
+@media (min-width: 550px) {
+  .el-form-button {
+    padding: 14px 18px;
+  }
+}
+
+.el-form-add-item-button {
+  font-family: var(--input-label-font);
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-success-5);
+  margin: 16px 0;
+  margin-left: -6px;
+  border-radius: var(--input-border-radius);
+  border: 0;
+  padding: 14px;
+  font-weight: 600;
+  color: foreground;
+  transform: scale(1);
+  transition: transform 400ms;
+}
+
+.el-form-button-back {
+  position: absolute;
+  background-color: var(--color-neutral-6);
+  bottom: 32px;
+}
+
+.el-form-left-icon {
+  margin-right: 10px;
+  margin-bottom: -4px;
+}
+
+.el-form-right-icon {
+  margin-left: 10px;
+  margin-bottom: -4px;
+}
+
+.el-form-button-forward {
+  margin-left: auto;
+  background-color: var(--color-primary-5);
+}
+@media (hover: hover) and (pointer: fine) {
+  .el-form-button:hover {
+    transform: scale(1.05);
+  }
+}
+
+.el-field-item {
+  margin-bottom: var(--input-field-bottom-margin);
+}
+
+@media (min-width: 360px) {
+  .el-field-item {
+    margin-bottom: var(--input-field-bottom-margin-mm);
+  }
+}
+
+.el-form-field-label {
+  display: block;
+  font-family: var(--input-label-font);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-neutral-6);
+  margin-bottom: 8px;
+}
+
+.el-form-field-description {
+  padding: 0;
+  font-size: 16px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+
+.el-field-error-text {
+  color: var(--color-danger-6);
+  font-weight: 500;
+  font-size: 16px;
+  font-family: var(--input-body-font);
+  margin-top: -2px;
+  margin-bottom: 2px;
+}
+
+.el-text-input {
+  width: 100%;
+  background: var(--input-background);
+  font-size: var(--input-font-size);
+  font-family: var(--input-body-font);
+  border-radius: var(--input-border-radius);
+  padding: 4px 6px;
+}
+
+.el-radio-or-checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.el-radio-or-checkbox-label {
+  display: block;
+  font-weight: 500;
+  font-size: var(--input-font-size);
+  margin-left: 8px;
+}
+
+@media (min-width: 360px) {
+  .el-form-field-label,
+  .el-form-field-description,
+  .el-radio-or-checkbox-label,
+  .el-text-input,
+  .el-form-button {
+    font-size: 1.1em;
+  }
+}
+
+@media (min-width: 565px) {
+  .el-form-field-label,
+  .el-form-field-description,
+  .el-radio-or-checkbox-label,
+  .el-text-input {
+    font-size: 1.2em;
+  }
+}
+
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.33);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+[data-reach-dialog-content] {
+  width: 90vw;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  outline: none;
+}
+
+@media (min-width: 360px) {
+  [data-reach-dialog-content] {
+    width: 86vw;
+    margin: 10vh auto;
+    background: white;
+    padding: 2rem;
+    outline: none;
+  }
+}
+
+@media (min-width: 550px) {
+  [data-reach-dialog-content] {
+    max-width: 720px;
+    padding: 94px;
+  }
+}

@@ -26,9 +26,9 @@ it("Should be able to add/edit/delete multiple items", () => {
   cy.wait(50);
   cy.findByText("Confirm").click();
   // Not sure why this needs to be here, but it does
-  cy.findByText("Confirm").click();
+  // cy.findByText("Confirm").click();
   cy.wait(50);
-  cy.get(".add-item-button").click();
+  cy.findByText("Add Item").click();
   cy.findByLabelText("Part #").type("Second Item");
   cy.get('[data-test="todo-description"]').click().type("Second Item Descrip");
   cy.findAllByText("Confirm").click();

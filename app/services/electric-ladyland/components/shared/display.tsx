@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type {
   CheckboxGroupBlueprint,
+  ExpandableListBlueprint,
   RadioFieldBlueprint,
   StatefulRadioFieldBlueprint,
   TextFieldBlueprint,
@@ -73,7 +74,8 @@ export function displayFieldLabelDescriptionError({
     | TextFieldBlueprint
     | RadioFieldBlueprint
     | StatefulRadioFieldBlueprint
-    | CheckboxGroupBlueprint;
+    | CheckboxGroupBlueprint
+    | ExpandableListBlueprint;
   fieldErrors?: string[];
   fieldVisited?: boolean;
 }) {

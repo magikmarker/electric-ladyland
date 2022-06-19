@@ -114,6 +114,54 @@ var import_react8 = require("@remix-run/react");
 var notImportantStep = {
   fields: [
     {
+      name: "todo-items-list",
+      type: "expandable-list",
+      label: "Todo Items",
+      description: "Add some groovy todos, all the cool kids are doing it these days.",
+      addItemLabel: "Add Item",
+      editItemLabel: "Edit Item",
+      addOrEditItemModalLabel: "Add or Edit Item",
+      initialValue: [],
+      listItemStructure: [
+        {
+          name: "todo-title",
+          label: "Part #",
+          type: "text",
+          required: true,
+          initialValue: "",
+          validation: {
+            patterns: ["^[\\w\\s-&']{2,50}$"],
+            messages: ["letters, spaces, & or '"]
+          },
+          showOnMobileTable: true,
+          tableFlex: 3,
+          alignText: "left"
+        },
+        {
+          name: "todo-description",
+          label: "Description",
+          description: "Short (less than 30 characters) description of todo item",
+          type: "text",
+          required: true,
+          initialValue: "",
+          validation: {
+            patterns: ["^[\\w\\s-&']{2,30}$"],
+            messages: ["letters, spaces, & or '"]
+          },
+          showOnMobileTable: true,
+          tableFlex: 3,
+          alignText: "left"
+        },
+        {
+          name: "priority",
+          label: "Source",
+          type: "radio",
+          options: ["High", "Medium", "Low"],
+          initialValue: "High"
+        }
+      ]
+    },
+    {
       name: "not-important",
       label: "Text Input",
       type: "text",
@@ -223,7 +271,8 @@ var todoStep = {
     {
       name: "todo-items-list",
       type: "expandable-list",
-      listLabel: "Todo Items",
+      label: "Todo Items",
+      description: "Add some groovy todos, all the cool kids are doing it these days.",
       addItemLabel: "Add Item",
       editItemLabel: "Edit Item",
       addOrEditItemModalLabel: "Add or Edit Item",
@@ -715,7 +764,7 @@ async function formActionFunction({
 }
 
 // app/services/electric-ladyland/styles.css
-var styles_default = "/build/_assets/styles-5LA3TAKT.css";
+var styles_default = "/build/_assets/styles-CXELP24C.css";
 
 // app/services/electric-ladyland/components/hidden.tsx
 function HiddenField({
@@ -972,6 +1021,7 @@ var import_react4 = require("@remix-run/react");
 var import_react5 = require("react");
 var import_dialog = require("@reach/dialog");
 var import_fi = require("react-icons/fi");
+var import_io5 = require("react-icons/io5");
 function ExpandableList({
   fieldBlueprint,
   fieldContext
@@ -995,8 +1045,12 @@ function ExpandableList({
       fieldsToShowInTable[field.name] = field;
     }
   });
-  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("button", {
-    className: "add-item-button expand-click-target",
+  return /* @__PURE__ */ React.createElement("div", {
+    className: "el-field-item"
+  }, displayFieldLabelDescriptionError({
+    fieldBlueprint
+  }), /* @__PURE__ */ React.createElement("button", {
+    className: "expand-click-target el-form-button el-form-add-item-button",
     onClick: (e) => {
       e.preventDefault();
       setSelectedIndex(void 0);
@@ -1004,10 +1058,8 @@ function ExpandableList({
       open();
     }
   }, /* @__PURE__ */ React.createElement("span", {
-    className: "add-item-icon"
-  }, /* @__PURE__ */ React.createElement(import_fi.FiPlusCircle, null)), fieldBlueprint.addItemLabel), /* @__PURE__ */ React.createElement("span", {
-    className: "block h-5 mm:h-6"
-  }), listItems.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: "el-form-left-icon"
+  }, /* @__PURE__ */ React.createElement(import_fi.FiPlusCircle, null)), fieldBlueprint.addItemLabel), listItems.length > 0 && /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
     className: "list-items-table-wrapper"
   }, /* @__PURE__ */ React.createElement("table", null, /* @__PURE__ */ React.createElement("thead", null, /* @__PURE__ */ React.createElement("tr", {
     className: "lit-row"
@@ -1082,11 +1134,24 @@ function ExpandableList({
     onDismiss: close
   }, /* @__PURE__ */ React.createElement(import_dialog.DialogContent, {
     "aria-label": fieldBlueprint.addOrEditItemModalLabel
-  }, selectedAction === "delete-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-    className: "font-bold text-2xl text-danger-7"
+  }, /* @__PURE__ */ React.createElement("div", {
+    className: "modal-content-wrapper"
+  }, /* @__PURE__ */ React.createElement("button", {
+    className: "close-modal-button expand-click-target",
+    onClick: close
+  }, /* @__PURE__ */ React.createElement("span", {
+    className: "close-icon-wrapper"
+  }, /* @__PURE__ */ React.createElement(import_io5.IoClose, {
+    role: "img"
+  })), /* @__PURE__ */ React.createElement("span", {
+    className: "visually-hidden"
+  }, "Close Modal")), selectedAction === "delete-item" ? /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
+    className: "modal-label modal-delete-item-label"
   }, "Delete Item"), /* @__PURE__ */ React.createElement("span", {
     className: "block h-3"
-  }), /* @__PURE__ */ React.createElement("p", null, "Are you sure you want to delete item", " ", listItems.map((item, index) => {
+  }), /* @__PURE__ */ React.createElement("p", {
+    className: "confirm-delete-text"
+  }, "Are you sure you want to delete item", " ", listItems.map((item, index) => {
     var _a;
     if (index === selectedIndex) {
       console.log({ item: item[Object.keys(item)[0]] });
@@ -1094,12 +1159,12 @@ function ExpandableList({
     } else {
       return null;
     }
-  })), /* @__PURE__ */ React.createElement("span", {
+  }), "?"), /* @__PURE__ */ React.createElement("span", {
     className: "block h-6"
   }), /* @__PURE__ */ React.createElement("div", {
     className: "flex items-center"
   }, /* @__PURE__ */ React.createElement("button", {
-    className: "bg-primary-05 text-primary-7 font-bold py-2 px-4 rounded-md mr-8 border-none expand-click-target",
+    className: "el-form-button el-form-button-neutral expand-click-target",
     "data-test": "cancel",
     onClick: () => {
       close();
@@ -1119,11 +1184,11 @@ function ExpandableList({
     name: "index-to-delete",
     value: selectedIndex
   }), /* @__PURE__ */ React.createElement("button", {
-    className: "bg-danger-05 text-danger-9 font-bold outline-none py-2 px-4 rounded-md",
+    className: "el-form-button el-form-button-danger expand-click-target",
     "data-test": "confirm-delete",
     type: "submit"
   }, "Confirm Delete")))) : /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", {
-    className: "font-bold text-neutral-9 text-2xl"
+    className: "modal-label modal-add-item-label"
   }, typeof selectedIndex === "number" ? fieldBlueprint.editItemLabel : fieldBlueprint.addItemLabel), /* @__PURE__ */ React.createElement("span", {
     className: "block h-8"
   }), /* @__PURE__ */ React.createElement(import_react4.Form, {
@@ -1154,9 +1219,9 @@ function ExpandableList({
   }), /* @__PURE__ */ React.createElement("span", {
     className: "block h-4"
   }), /* @__PURE__ */ React.createElement("button", {
-    className: "text-success-7 font-bold rounded-md border-none text-lg px-4 py-2 -ml-1 bg-success-05",
+    className: "el-form-button el-form-add-item-button expand-click-target",
     type: "submit"
-  }, "Confirm"))))));
+  }, "Confirm")))))));
 }
 
 // app/services/electric-ladyland/components/stateful-radio.tsx
@@ -1656,7 +1721,7 @@ function Index() {
 }
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "807f830e", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-IGAUH5G2.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-807F830E.js" };
+var assets_manifest_default = { "version": "7b9e734a", "entry": { "module": "/build/entry.client-Q7T3ZI3I.js", "imports": ["/build/_shared/chunk-2KUA5ERT.js", "/build/_shared/chunk-KREO6WPC.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-MNYOBBNT.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-467OWTL2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/multi-item-form": { "id": "routes/multi-item-form", "parentId": "root", "path": "multi-item-form", "index": void 0, "caseSensitive": void 0, "module": "/build/routes/multi-item-form-PKBR7GIW.js", "imports": void 0, "hasAction": true, "hasLoader": true, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-7B9E734A.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };
