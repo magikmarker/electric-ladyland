@@ -107,7 +107,7 @@ __export(multi_item_form_exports, {
   loader: () => loader,
   meta: () => meta2
 });
-var import_node7 = require("@remix-run/node");
+var import_node6 = require("@remix-run/node");
 var import_react8 = require("@remix-run/react");
 
 // app/forms/multi-item-form.ts
@@ -294,6 +294,75 @@ var multiItemStepForm = [
   lessImportantStep
 ];
 
+// app/services/electric-ladyland/action/logic/add-form-values-to-context.ts
+function addFormValuesToContext({
+  formType,
+  formBlueprint,
+  body,
+  context
+}) {
+  var _a;
+  function addFieldToContext2(field) {
+    var _a2, _b;
+    let formFieldValue;
+    if (field.type === "email" || field.type === "password" || field.type === "text" || field.type === "textarea" || field.type === "radio" || field.type === "hidden" || field.type === "stateful-radio") {
+      formFieldValue = ((_a2 = body.get(`${field.name}`)) == null ? void 0 : _a2.toString()) ?? field.initialValue;
+    }
+    if (field.type === "checkbox") {
+      let checkboxValue = (_b = body.get(`${field.name}`)) == null ? void 0 : _b.toString();
+      if (!checkboxValue) {
+        return;
+      }
+      formFieldValue = checkboxValue;
+    }
+    let errors = [];
+    if (field.type === "text" || field.type === "textarea" || field.type === "email" || field.type === "password") {
+      if (!formFieldValue && field.required) {
+        errors.push("This field is required");
+      }
+    }
+    if (typeof field === "object") {
+      if (formFieldValue) {
+        context[`${field.name}`] = {
+          value: formFieldValue,
+          errors
+        };
+      }
+    }
+    if (field.type === "stateful-radio") {
+      field.dependentChildren.forEach((fields) => {
+        if (typeof fields !== "undefined") {
+          fields.forEach((nestedField) => {
+            if (nestedField) {
+              addFieldToContext2(nestedField);
+            }
+          });
+        }
+      });
+    }
+    if (field.type === "checkbox-group") {
+      field.checkboxes.forEach((checkbox) => {
+        delete context[`${checkbox.name}`];
+        addFieldToContext2(checkbox);
+        console.log("hi neighbors");
+      });
+    }
+  }
+  if (formType === "basic") {
+    formBlueprint.forEach((field) => {
+      addFieldToContext2(field);
+    });
+  }
+  if (formType === "multipart") {
+    const currentFormStep = context.currentStep;
+    for (const field of (_a = formBlueprint[currentFormStep]) == null ? void 0 : _a.fields) {
+      if (field) {
+        addFieldToContext2(field);
+      }
+    }
+  }
+}
+
 // app/services/electric-ladyland/action/logic/check-context-for-errors.ts
 function checkContextForErrors({
   context,
@@ -472,86 +541,7 @@ function convertSingleQuotes(string) {
   return result;
 }
 
-// app/services/electric-ladyland/action/index.ts
-var import_node5 = require("@remix-run/node");
-
-// app/services/electric-ladyland/action-utils.ts
-var import_node4 = require("@remix-run/node");
-function addFormValuesToContext({
-  formType,
-  formBlueprint,
-  body,
-  context
-}) {
-  var _a;
-  function addFieldToContext2(field) {
-    var _a2, _b;
-    let formFieldValue;
-    if (field.type === "email" || field.type === "password" || field.type === "text" || field.type === "textarea" || field.type === "radio" || field.type === "hidden" || field.type === "stateful-radio") {
-      formFieldValue = ((_a2 = body.get(`${field.name}`)) == null ? void 0 : _a2.toString()) ?? field.initialValue;
-    }
-    if (field.type === "checkbox") {
-      let checkboxValue = (_b = body.get(`${field.name}`)) == null ? void 0 : _b.toString();
-      if (!checkboxValue) {
-        return;
-      }
-      formFieldValue = checkboxValue;
-    }
-    let errors = [];
-    if (field.type === "text" || field.type === "textarea" || field.type === "email" || field.type === "password") {
-      if (!formFieldValue && field.required) {
-        errors.push("This field is required");
-      }
-    }
-    if (typeof field === "object") {
-      if (formFieldValue) {
-        context[`${field.name}`] = {
-          value: formFieldValue,
-          errors
-        };
-      }
-    }
-    if (field.type === "stateful-radio") {
-      field.dependentChildren.forEach((fields) => {
-        if (typeof fields !== "undefined") {
-          fields.forEach((nestedField) => {
-            if (nestedField) {
-              addFieldToContext2(nestedField);
-            }
-          });
-        }
-      });
-    }
-    if (field.type === "checkbox-group") {
-      field.checkboxes.forEach((checkbox) => {
-        delete context[`${checkbox.name}`];
-        addFieldToContext2(checkbox);
-        console.log("hi neighbors");
-      });
-    }
-  }
-  if (formType === "basic") {
-    formBlueprint.forEach((field) => {
-      addFieldToContext2(field);
-    });
-  }
-  if (formType === "multipart") {
-    const currentFormStep = context.currentStep;
-    for (const field of (_a = formBlueprint[currentFormStep]) == null ? void 0 : _a.fields) {
-      if (field) {
-        addFieldToContext2(field);
-      }
-    }
-  }
-}
-function validateFieldValue({
-  value,
-  regex
-}) {
-  let regexTestPattern = new RegExp(`${regex}`, "igm");
-  value = convertSingleQuotes(value);
-  return regexTestPattern.test(value);
-}
+// app/services/electric-ladyland/action/logic/validate-form-field-value.ts
 function validateFormFieldValue({
   formField,
   context
@@ -584,8 +574,17 @@ function validateFormFieldValue({
     }
   }
 }
+function validateFieldValue({
+  value,
+  regex
+}) {
+  let regexTestPattern = new RegExp(`${regex}`, "igm");
+  value = convertSingleQuotes(value);
+  return regexTestPattern.test(value);
+}
 
 // app/services/electric-ladyland/action/index.ts
+var import_node4 = require("@remix-run/node");
 async function formActionFunction({
   formType,
   request,
@@ -602,7 +601,7 @@ async function formActionFunction({
   if (formType === "multipart" && Object.keys(context).length < 1) {
     let { pathname: pathname2 } = new URL(request.url);
     console.log("No context found in session, redirecting to start");
-    return (0, import_node5.redirect)(pathname2, {
+    return (0, import_node4.redirect)(pathname2, {
       headers: {
         "Set-Cookie": await destroySession(session)
       }
@@ -611,7 +610,7 @@ async function formActionFunction({
   const body = await request.formData();
   let honeypotFieldHit = honeypotFieldHasValue({ body });
   if (honeypotFieldHit) {
-    return (0, import_node5.redirect)("/");
+    return (0, import_node4.redirect)("/");
   }
   const operationType = body.get("operation-type");
   if (operationType) {
@@ -629,7 +628,7 @@ async function formActionFunction({
     if (submitType === "back") {
       context.currentStep -= 1;
       session.set("context", context);
-      return (0, import_node5.redirect)(pathname, {
+      return (0, import_node4.redirect)(pathname, {
         headers: {
           "Set-Cookie": await commitSession(session)
         }
@@ -700,7 +699,7 @@ async function formActionFunction({
       context.currentStep += 1;
       console.log({ currentStep: context.currentStep });
       session.set("context", context);
-      return (0, import_node5.redirect)(pathname, {
+      return (0, import_node4.redirect)(pathname, {
         headers: {
           "Set-Cookie": await commitSession(session)
         }
@@ -708,7 +707,7 @@ async function formActionFunction({
     }
   }
   console.log("you're here?");
-  return (0, import_node5.redirect)(pathname, {
+  return (0, import_node4.redirect)(pathname, {
     headers: {
       "Set-Cookie": await commitSession(session)
     }
@@ -1392,7 +1391,7 @@ function FormButton({
 }
 
 // app/services/electric-ladyland/loader/index.ts
-var import_node6 = require("@remix-run/node");
+var import_node5 = require("@remix-run/node");
 
 // app/services/electric-ladyland/loader/logic/check-for-relevant-context.ts
 function checkForRelevantContext({
@@ -1562,7 +1561,7 @@ async function formLoaderFunction({
     let formStage = getFormStage2({ context, formBlueprint });
     if (context.currentStep > 0 && Object.keys(context).length < 1) {
       console.log("You shouldn't be here");
-      return (0, import_node6.json)({}, {
+      return (0, import_node5.json)({}, {
         headers: {
           "Set-Cookie": await destroySession(session)
         }
@@ -1614,7 +1613,7 @@ var loader = async ({ request }) => {
     formBlueprint: multiItemStepForm
   });
   console.log({ currentStepBlueprint, multiItemStepForm, context });
-  return (0, import_node7.json)({
+  return (0, import_node6.json)({
     currentStepBlueprint,
     context
   }, {
