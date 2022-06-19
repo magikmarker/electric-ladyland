@@ -1,2 +1,11 @@
 node_modules
 cypress
+.cache
+app
+build
+public.eslintrc
+cypress.config.ts
+index.ts
+remix.config.js
+remix.env.d.ts
+tsconfig.json
